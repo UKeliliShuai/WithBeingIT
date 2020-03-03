@@ -20,6 +20,14 @@
 
 - [java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
 
+#### JVM
+
+- [JVM 史上最最最完整深入解析](https://mp.weixin.qq.com/s/EydeGMpxd_zYv11noPAABA)
+
+#### 操作系统
+
+- [操作系统的极简教程](https://mp.weixin.qq.com/s/p7AUCjig126UFOCruyD15A)
+
 #### Design
 
 - [设计模式](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
