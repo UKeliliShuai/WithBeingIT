@@ -16,7 +16,7 @@
 
 ### 基础知识
 
-- 高级
+- [高级](https://github.com/UKeliliShuai/WithBeingIT/blob/master/ElementaryKnowledge/%E9%AB%98%E7%BA%A7.md)
 
 #### 多线程
 
