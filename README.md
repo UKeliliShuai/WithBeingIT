@@ -18,15 +18,15 @@
 
 - 高级
 
-#### 多线程
+### 多线程
 
 - 线程安全定义：[java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
 
-#### JVM
+### JVM
 
 - [JVM 史上最最最完整深入解析](https://mp.weixin.qq.com/s/EydeGMpxd_zYv11noPAABA)
 
-#### 操作系统
+## 操作系统
 
 - [操作系统的极简教程](https://mp.weixin.qq.com/s/p7AUCjig126UFOCruyD15A)
 
