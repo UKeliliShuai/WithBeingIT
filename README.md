@@ -21,6 +21,7 @@
 ### 多线程
 
 - 线程安全定义：[java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
+- 数据共享：[JAVA多线程提高四：多个线程之间共享数据的方式](https://www.cnblogs.com/pony1223/p/9256224.html)
 
 ### JVM
 
@@ -30,11 +31,11 @@
 
 - [操作系统的极简教程](https://mp.weixin.qq.com/s/p7AUCjig126UFOCruyD15A)
 
-#### Design
+## Design
 
 - [设计模式](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
 
-#### 框架
+## 框架
 
 - 磨刀不误砍柴功之：[Spring框架简介](https://www.jianshu.com/p/7b6a070119c7)
 
