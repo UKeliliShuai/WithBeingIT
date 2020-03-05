@@ -14,13 +14,22 @@
 
 ## Java
 
+- [【干货】你必须掌握的 21 个 Java 核心技术！](https://mp.weixin.qq.com/s/U85Ip73WF1uGEEggRp0deg)
+
 ### 基础知识
 
 - [高级](https://github.com/UKeliliShuai/WithBeingIT/blob/master/ElementaryKnowledge/%E9%AB%98%E7%BA%A7.md)
 
 ### 多线程
 
+#### 基本概念
+
+- [10分钟读懂进程线程、同步异步、阻塞非阻塞、并发并行](https://mp.weixin.qq.com/s/c3YuR8pWKn4RpseGIWNxvw)
 - 线程安全定义：[java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
+- 死锁（银行家算法）：[漫话：如何给女朋友介绍什么是死锁](https://mp.weixin.qq.com/s/SsU8Ro-Uf2WDSjkPv4lptQ)
+
+#### 知识点：
+
 - 数据共享：[JAVA多线程提高四：多个线程之间共享数据的方式](https://www.cnblogs.com/pony1223/p/9256224.html)
 
 ### JVM
@@ -52,3 +61,13 @@
 ### UML/类图
 
 - [五分钟看懂UML类图与类的关系详解](https://juejin.im/post/5b42d4396fb9a04fbc21d7dd)
+
+### Git
+
+- [在 IntelliJ IDEA 中这样使用 Git，贼方便了！](https://mp.weixin.qq.com/s/3ll40XqNLwasJR1LYABvgw)
+
+## Python
+
+### 整理
+
+- [从Zero到Hero，一文掌握Python关键代码](https://mp.weixin.qq.com/s/zWeg700fJU3Isiv3sGEDhw)
