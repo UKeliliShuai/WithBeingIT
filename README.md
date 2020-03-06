@@ -22,13 +22,13 @@
 
 ### 多线程
 
-#### 基本概念
+##### 基本概念
 
 - [10分钟读懂进程线程、同步异步、阻塞非阻塞、并发并行](https://mp.weixin.qq.com/s/c3YuR8pWKn4RpseGIWNxvw)
 - 线程安全定义：[java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
 - 死锁（银行家算法）：[漫话：如何给女朋友介绍什么是死锁](https://mp.weixin.qq.com/s/SsU8Ro-Uf2WDSjkPv4lptQ)
 
-#### 知识点：
+##### 知识点：
 
 - 数据共享：[JAVA多线程提高四：多个线程之间共享数据的方式](https://www.cnblogs.com/pony1223/p/9256224.html)
 
@@ -60,6 +60,7 @@
 
 ### UML/类图
 
+- [看懂UML类图和时序图](https://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html)
 - [五分钟看懂UML类图与类的关系详解](https://juejin.im/post/5b42d4396fb9a04fbc21d7dd)
 
 ### Git
