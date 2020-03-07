@@ -15,4 +15,5 @@
 
 ### UML时序图
 
+- [什么是序列图/时序图？](https://juejin.im/post/5cfb7c086fb9a07ecd3d4e53)
 - [UML时序图](https://juejin.im/post/5a69857a6fb9a01c952647e1#heading-8)
