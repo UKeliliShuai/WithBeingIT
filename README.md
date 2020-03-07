@@ -46,6 +46,7 @@
 
 - [操作系统的极简教程](https://mp.weixin.qq.com/s/p7AUCjig126UFOCruyD15A)
 - Github/me115/[Linux工具快速教程](https://linuxtools-rst.readthedocs.io/zh_CN/latest/)
+- [windows——CMD常用命令](https://blog.csdn.net/LJFPHP/article/details/78818696)
 
 ## 4.Design
 

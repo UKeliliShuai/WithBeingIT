@@ -6,7 +6,7 @@
 
 1. [课程地址](https://www.bilibili.com/video/av38657363)
 
-3. [课程资料](https://pan.baidu.com/s/1KvNHadguK00zEc0xldZgfw )→提取码：5iae 、[课程笔记](https://cloudlandboy.github.io/myNote/#/backend/springboot/helloworld)
+3. [课程资料](https://pan.baidu.com/s/1KvNHadguK00zEc0xldZgfw )→提取码：5iae 、[课程笔记](https://cloudlandboy.github.io/myNote/#/backend/springboot/helloworld)、SpringBoot笔记_尚硅谷
 
 4. 本文开发环境：IntelliJ-IDEA2018、JDK1.8、Apache Maven 3.3.9
 
