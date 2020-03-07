@@ -57,6 +57,7 @@
 
 - [Spring框架概述](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Framework/Framework.md)
 - [SpringBoot学习](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Framework/SpringBoot学习.md)
+- [SpringBoot尚硅谷-笔记](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Framework/SpringBoot笔记_尚硅谷.md)
 
 ## 5.工具
 
