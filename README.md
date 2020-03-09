@@ -68,6 +68,9 @@
 
 ### Git
 
+- [全面理解Git](https://juejin.im/post/582bd0b4da2f600063d4f89e)
+- [🛠Git 常用操作总结](https://juejin.im/post/5a2cdfe26fb9a0452936b07f)
+
 - [Git的使用以及GitHub的配置](https://www.jianshu.com/p/6ae3697a7c93)
 - [在 IntelliJ IDEA 中这样使用 Git，贼方便了！](https://mp.weixin.qq.com/s/3ll40XqNLwasJR1LYABvgw)
 
