@@ -68,6 +68,7 @@
 
 ### Git
 
+- [Git的使用以及GitHub的配置](https://www.jianshu.com/p/6ae3697a7c93)
 - [在 IntelliJ IDEA 中这样使用 Git，贼方便了！](https://mp.weixin.qq.com/s/3ll40XqNLwasJR1LYABvgw)
 
 ## 6.Python
