@@ -96,8 +96,121 @@
   - 用阿里的镜像替代远程中央镜像
   - 大部分jar包都可以在阿里镜像中找到，部分jar包在阿里镜像中没有，需要单独配置镜像
 
-- 目的：
+- 结果：maven工程文件会导入40M的依赖文件
 
 ![1583838950645](D:\GitHub\Notes\WithBeingIT\_static\1583838950645.png)
 
-2.导入Spring依赖
+```xml
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+```
+
+#### 3.编写主程序
+
+- 启动springboot应用
+
+```java
+package com.wangshuai;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * @SpringBootApplication标注一个主程序，来说明这是一个Spring boot应用
+ */
+@SpringBootApplication
+public class helloworldmainAPP {
+    //psvm----->main函数关键词
+    public static void main(String[] args) {
+        //spring应用启动起来
+        SpringApplication.run(helloworldmainAPP.class,args);
+    }
+}
+```
+
+#### 4.编写相关的Controller、Service
+
+```java
+package com.wangshuai.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class HelloController {
+    @ResponseBody
+    @RequestMapping("/hello")
+    public String hello(){
+        return "hello world";
+    }
+}
+```
+
+#### 5.运行主程序测试
+
+```html
+访问以下网址：
+http://localhost:8080/hello
+```
+
+#### 6.简化部署
+
+- 将以下maven插件导入springboot---pom文件
+
+```xml
+<!-- 这个插件，可以将应用打包成一个可执行的jar包；-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+```
+
+![1583916847690](D:\GitHub\Notes\WithBeingIT\_static\1583916847690.png)
+
+- 将这个应用打成jar包，直接使用java -jar的命令进行执行；
+  - 在IDEA---->Target文件夹下，包名.jar包
+  - Boot-INFO：classes文件夹下是自己写的类、lib文件夹下是导入Springboot依赖时导入进来的（包括Tomcat-embed）
+  - win+r打开cmd，进入目标目录
+  - java -jar spring-boot-01-helloworld-1.0-SNAPSHOT.jar运行程序
+
+### 4.HelloWorld探究
+
+#### 1、POM文件
+
+##### 1、父项目
+
+```xml
+ <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+ </parent>
+ <--!--点击spring-boot-starter-parent></--!-->
+"spring-boot-starter-parent"他的父项目是:
+<parent>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-dependencies</artifactId>
+  <version>1.5.9.RELEASE</version>
+  <relativePath>../../spring-boot-dependencies</relativePath>
+</parent>
+由上述parent内容(spring-boot-dependencies)来真正管理Spring Boot应用里面的所有依赖版本；
+```
+
+**Spring Boot的版本仲裁中心；**
+
+- 优势：以后我们导入依赖默认是不需要写版本号；
+- 缺陷：没有在dependencies里面管理的依赖自然需要声明版本号
