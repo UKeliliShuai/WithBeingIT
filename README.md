@@ -20,6 +20,26 @@
 
 - [高级](https://github.com/UKeliliShuai/WithBeingIT/blob/master/ElementaryKnowledge/%E9%AB%98%E7%BA%A7.md)
 
+- 反射与注解：[理解 Android 中的注解与反射](https://juejin.im/entry/57c9f5890e3dd90063e83461)、[理解 Android 中的注解与反射](https://juejin.im/entry/57c9f5890e3dd90063e83461)、[深入理解Java注解类型(@Annotation)](https://blog.csdn.net/javazejian/article/details/71860633)
+
+  - 解析注解的类如何定义?
+  - 定义在何处？何时运行？——[注解处理器](https://juejin.im/post/5a809a445188257a836c2e9c#heading-6)
+  - [Spring@Autowired注解与自动装配](https://blog.csdn.net/HEYUTAO007/article/details/5981555)
+
+- 动态代理：[Java动态代理](https://juejin.im/post/5ad3e6b36fb9a028ba1fee6a)
+
+- [深入理解Java类型信息(Class对象)与反射机制](https://blog.csdn.net/javazejian/article/details/71860633)
+
+  深入理解Java枚举类型(enum)
+
+  深入理解Java注解类型(@Annotation)
+
+  深入理解Java并发之synchronized实现原理
+
+  深入理解Java内存模型(JMM)及volatile关键字
+
+  深入理解Java类加载器(ClassLoader)
+
 ### 多线程
 
 ##### 基本概念
@@ -82,3 +102,7 @@
 - [从Zero到Hero，一文掌握Python关键代码](https://mp.weixin.qq.com/s/zWeg700fJU3Isiv3sGEDhw)
 
 ## 7.面试
+
+## 8.Android
+
+- [Handler都没搞懂，拿什么去跳槽啊？](https://juejin.im/post/5c74b64a6fb9a049be5e22fc#heading-0)
