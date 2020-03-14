@@ -82,6 +82,28 @@
 
 ## 5.工具
 
+### IDEA
+
+1 Background Image Plus（未安装）
+2 CodeGlance: vscod右侧代码地图
+3 Translation
+4 Rainbow Brackets: 彩虹色括号
+5 Grep Console: 日志着色控制台显示
+6 Statistic: 代码统计
+7 Markdown Navigator
+8 RestfulToolkit: 快速定位controller层接口、接口测试
+9 GsonFormat: Json转Java类
+10 Mybatis Log Plugin: 快速打印SQL语句
+11 Free Mybatis Plugin: mybatis xml id与接口间跳转
+网友推荐其他好用的插件：
+1 [Material Theme UI](https://blog.csdn.net/w605283073/article/details/86227134): 美化
+2 [Lombok](https://juejin.im/post/5a6eceb8f265da3e467555fe): 省掉手动set/get方法
+3 [Alibaba Java Coding Guidelines](https://www.cnblogs.com/mafly/p/aliPlugin.html): 阿里巴巴开发规范
+4 [Easy Code](https://www.oschina.net/news/99813/easycode-1-2-0-released): 数据库表生成JavaBean
+5 JRebel for IntelliJ:（未安装） JavaWeb项目热部署
+6 Key Promoter X: 快捷键提示
+7 [.ignore](https://blog.csdn.net/qq_34590097/article/details/56284935): 生成git ignore文件
+
 ### UML
 
 - [UML类图、UML时序图](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Tools/UML.md)
@@ -91,9 +113,38 @@
 
 - [全面理解Git](https://juejin.im/post/582bd0b4da2f600063d4f89e)
 - [🛠Git 常用操作总结](https://juejin.im/post/5a2cdfe26fb9a0452936b07f)
-
 - [Git的使用以及GitHub的配置](https://www.jianshu.com/p/6ae3697a7c93)
 - [在 IntelliJ IDEA 中这样使用 Git，贼方便了！](https://mp.weixin.qq.com/s/3ll40XqNLwasJR1LYABvgw)
+
+### Excel
+
+- [你加班2小时做的Excel表格，我只需1分钟！(建议收藏)](https://zhuanlan.zhihu.com/p/74011507)
+
+- [7 分钟入门 Excel VBA，从此打开新世界的大门](https://www.jianshu.com/p/1a529d5f824a)
+
+- Excel转大写函数：
+
+  ```vb
+  Option Explicit
+  
+  Function 大写(cell As String) As String    '声明函数名，有一个参数
+      Dim RMBS As String
+      If cell = "" Or Not IsNumeric(cell) Then 大写 = "": Exit Function    '如果参数为空或者非数值则返回空白
+      If cell = 0 Then 大写 = "零元整": Exit Function    '如果参数为0则返回"零元整"]
+      '将数值转换成中文大写,并将点替换成"元",将"-"替换成"负"
+      RMBS = Replace(Replace(Application.Text(Round(cell, 2), "[DBnum2]"), ".", "元"), "-", "负")
+      '加入角与分,同时将最后的"零"替换成"元整"
+      RMBS = IIf(Left(Right(RMBS, 3), 1) = "元", Left(RMBS, Len(RMBS) - 1) & "角" & Right(RMBS, 1) & "分", IIf(Left(Right(RMBS, 2), 1) = "元", RMBS & "角", IIf(RMBS = "零", "", RMBS & "元整")))
+      '将"零元"和"零角"替换成空
+      RMBS = Replace(Replace(RMBS, "零元", ""), "零角", "")
+      RMBS = IIf(Right(RMBS, 3) = "元" & Left(Right(RMBS, 2), 1) & "分", Left(RMBS, Len(RMBS) - 2) & "零" & Right(RMBS, 2), RMBS)
+      大写 = RMBS    '将变量的值赋予函数
+      'isNumeric用于判断参数是否是数字,非数字是无法转换成人民币大写的
+      'replace是用于替换的函数,但它和工作表函数replace有极大的不同,与substitute函数极其相近
+  End Function
+  ```
+
+  
 
 ## 6.Python
 
