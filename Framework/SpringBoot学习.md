@@ -207,10 +207,142 @@ http://localhost:8080/hello
   <version>1.5.9.RELEASE</version>
   <relativePath>../../spring-boot-dependencies</relativePath>
 </parent>
-由上述parent内容(spring-boot-dependencies)来真正管理Spring Boot应用里面的所有依赖版本；
+<!--由上述parent内容(spring-boot-dependencies)来真正管理Spring Boot应用里面的所有依赖版本；-->
 ```
 
 **Spring Boot的版本仲裁中心；**
 
 - 优势：以后我们导入依赖默认是不需要写版本号；
 - 缺陷：没有在dependencies里面管理的依赖自然需要声明版本号
+
+##### 2、启动器
+
+> 父项目只是作为版本仲裁
+>
+> 问题：那jar包是由谁导入的呢?
+
+1.**spring-boot-starter**+2.**web**
+
+```xml
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+```
+
+- **spring-boot-starter**:称为springboot场景启动器
+  - 由它导入帮我们导入了web模块正常运行所依赖的组件；
+  - 版本号由父项目仲裁
+  - [查看spring的场景启动器](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter)，点击POM可以查看对应的github代码
+
+- 总结：
+
+  > Spring Boot将所有的功能场景都抽取出来，做成一个个的starters（启动器），只需要在项目里面引入这些starter相关场景的所有依赖都会导入进来。要用什么功能就导入什么场景的启动器
+
+#### 2、主程序类，主入口类@SpringBootApplication
+
+```java
+/**
+ *  @SpringBootApplication 来标注一个主程序类，说明这是一个Spring Boot应用
+ */
+@SpringBootApplication
+public class HelloWorldMainApplication {
+
+    public static void main(String[] args) {
+
+        // Spring应用启动起来
+        SpringApplication.run(HelloWorldMainApplication.class,args);
+    }
+}
+```
+
+@**SpringBootApplication**: Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该**运行这个类的main方法**来启动SpringBoot应用；
+
+1. @**SpringBootApplication**组合注解:
+
+```java
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@SpringBootConfiguration//-----------下文有解释
+@EnableAutoConfiguration//------------下文有解释
+@ComponentScan(
+    excludeFilters = {@Filter(
+    type = FilterType.CUSTOM,
+    classes = {TypeExcludeFilter.class}
+), @Filter(
+    type = FilterType.CUSTOM,
+    classes = {AutoConfigurationExcludeFilter.class}
+)}
+)
+public @interface SpringBootApplication {
+   ……等等属性
+}
+```
+
+- 1. @SpringBootConfiguration——Springboot的配置类：
+
+  ```java
+  @Target({ElementType.TYPE})
+  @Retention(RetentionPolicy.RUNTIME)
+  @Documented
+  @Configuration
+  public @interface SpringBootConfiguration {
+  }
+  ```
+
+  - @Configuration是spring的底层注解
+
+    > 配置文件太多----->替换为“配置类”
+    >
+    > 也就是用@Configuration标注这个类
+
+  - 注意@Configuration标注的配置类实质是容器中的一个组件@component**—————填坑—————**
+  - 总结而言，@SpringBootConfiguration与@Configuration甚至与@component类似，实质是标注**容器组件**
+
+- 2. @EnableAutoConfiguration：开启自动配置功能
+
+  - 效果是：springMVC启动起来了、spring应用可以使用、包扫描已完成	
+
+    ```java
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @Inherited
+    @AutoConfigurationPackage
+    @Import({EnableAutoConfigurationImportSelector.class})
+    public @interface EnableAutoConfiguration {
+    ```
+
+  - @AutoConfigurationPackage，文意：自动配置包
+
+    - @Import({Registrar.class})——spring的底层注解，给容器中导入括号中的内容，例如“{Registrar.class}”**—————填坑—————**
+    - ctrl+左键点击“Registrar.class”后，对该函数（AutoConfigurationPackages.register）加入断点，debug可查看导入的包名
+    - 运行时计算：选中表达式，右键“Evaluate Expression”
+
+    ![1584178065524](D:\GitHub\Notes\WithBeingIT\_static\1584178065524.png)
+
+    - 总结作用：**将主配置类/Springboot主程序类（@SpringBootApplication标注的类）的所在包及下面所有子包里面的所有组件扫描到Spring容器；**
+      - 如果组件注解与“**@SpringBootApplication标注的类**”不是子包或者不在同一个包，经过实验是无法扫描组件的
+
+- 3. @ComponentScan**—————填坑：配置、XML--->自动配置类、类加载器机制—————**
+
+     - AutoConfigurationExcludeFilter.class
+
+       - ```
+         AutoConfigurationImportSelector//导入哪些组件的选择器
+         ```
+
+     - ```
+       org.springframework.boot.autoconfigure-----MAVEN目录下
+       ```
+
+     ![1584180226335](D:\GitHub\Notes\WithBeingIT\_static\1584180226335.png)
+
+![1584180348273](D:\GitHub\Notes\WithBeingIT\_static\1584180348273.png)
+
+- **J2EE的整体整合解决方案和自动配置都在spring-boot-autoconfigure-1.5.9.RELEASE.jar；**
+
+![1584180964543](D:\GitHub\Notes\WithBeingIT\_static\1584180964543.png)
+
