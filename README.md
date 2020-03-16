@@ -84,6 +84,10 @@
 
 ### IDEA
 
+#### 插件安装：
+
+[Java程序员必备的Intellij插件（长期更新，截止到2018-05-03)](https://juejin.im/entry/5aea80346fb9a07ab9794f06)
+
 1 Background Image Plus（未安装）
 2 CodeGlance: vscod右侧代码地图
 3 Translation
@@ -103,6 +107,10 @@
 5 JRebel for IntelliJ:（未安装） JavaWeb项目热部署
 6 Key Promoter X: 快捷键提示
 7 [.ignore](https://blog.csdn.net/qq_34590097/article/details/56284935): 生成git ignore文件
+
+#### 使用技巧
+
+- [使用IntelliJ IDEA查看类的继承关系图形](https://www.cnblogs.com/deng-cc/p/6927447.html)
 
 ### UML
 

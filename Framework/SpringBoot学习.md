@@ -298,10 +298,10 @@ public @interface SpringBootApplication {
     >
     > 也就是用@Configuration标注这个类
 
-  - 注意@Configuration标注的配置类实质是容器中的一个组件@component**—————填坑—————**
+  - 注意@Configuration标注的配置类实质是容器中的一个组件@component**—————填坑：有什么用呢？—————**
   - 总结而言，@SpringBootConfiguration与@Configuration甚至与@component类似，实质是标注**容器组件**
 
-- 2. @EnableAutoConfiguration：开启自动配置功能
+- 2. @EnableAutoConfiguration：开启（Enable）自动（Auto）配置功能（Configuration）
 
   - 效果是：springMVC启动起来了、spring应用可以使用、包扫描已完成	
 
