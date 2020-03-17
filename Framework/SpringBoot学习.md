@@ -53,6 +53,10 @@
    >
    > -熟练使用IDEA
 
+7. 课程章节（与笔记目录一致）：
+
+   ![1584370115898](D:\GitHub\SAEngineer\SAEngineer\_static\1584370115898.png)
+
 ## 一、SpringBoot入门
 
 ### 1.单体应用vs微服务
@@ -323,6 +327,7 @@ public @interface SpringBootApplication {
 
     ![1584178065524](D:\GitHub\Notes\WithBeingIT\_static\1584178065524.png)
 
+    - 自动配置类的作用：给容器中导入这个场景需要的所有组件，并配置好这些组件；
     - 总结作用：**将主配置类/Springboot主程序类（@SpringBootApplication标注的类）的所在包及下面所有子包里面的所有组件扫描到Spring容器；**
       - 如果组件注解与“**@SpringBootApplication标注的类**”不是子包或者不在同一个包，经过实验是无法扫描组件的
 
