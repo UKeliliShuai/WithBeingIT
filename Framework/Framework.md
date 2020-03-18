@@ -68,3 +68,18 @@ Spring 提供了以下两种不同类型的容器：[IoC 容器](https://wiki.ji
 
 - 尚硅谷：配置类也是容器中的一个组件@component
   - 自动配置类的作用：给容器中导入这个场景需要的所有组件，并配置好这些组件；
+
+SpringBoot单元测试：[使用 Spring 进行单元测试](https://www.ibm.com/developerworks/cn/java/j-lo-springunitest/)、[Spring整合Junit4进行单元测试](https://blog.csdn.net/qq_32786873/article/details/56480880)
+
+[java项目中的classpath到底是什么](https://segmentfault.com/a/1190000015802324)
+
+[JSR 303 - Bean Validation 介绍及最佳实践](https://www.ibm.com/developerworks/cn/java/j-lo-jsr303/index.html)
+
+- 应用程序必须通过某种手段来确保输入进来的数据从语义上来讲是正确的。在通常的情况下，应用程序是分层的，**不同的层由不同的开发人员来完成**。很多时候同样的数据验证逻辑会出现在不同的层，这样就会导致代码冗余和一些管理的问题，比如说语义的一致性等。为了避免这样的情况发生，最好是将验证逻辑与相应的域模型进行绑定。
+
+- | `@NotNull` | 被注释的元素必须不为 `null`    |
+  | ---------- | ------------------------------ |
+  | `@Email`   | 被注释的元素必须是电子邮箱地址 |
+
+[【小家Spring】Spring注解驱动开发---向Spring Ioc容器中注册Bean的7种方式](https://fangshixiang.blog.csdn.net/article/details/86702407)
+
