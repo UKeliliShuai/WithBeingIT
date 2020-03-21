@@ -4,7 +4,7 @@
 
 ## 序、基本信息
 
-1. [课程地址](https://www.bilibili.com/video/av38657363)
+1. [课程地址](https://www.bilibili.com/video/av38657363)、[Spring Boot参考文档](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features)
 
 3. [课程资料](https://pan.baidu.com/s/1KvNHadguK00zEc0xldZgfw )→提取码：5iae 、[课程笔记](https://cloudlandboy.github.io/myNote/#/backend/springboot/helloworld)、SpringBoot笔记_尚硅谷
 
@@ -937,7 +937,395 @@ java -jar spring-boot-02-config-02-0.0.1-SNAPSHOT.jar --server.port=8087  --serv
 
 ### 9.自动配置原理
 
+知识点要求：
+
+- 配置了什么？
+- 能不能修改
+- 能修改哪些配置
+- 能不能扩展
+
 ```
 springboot经过2之后
 使用getAutoConfigurationEntry函数
 ```
+
+## 三、日志
+
+> **日志场景/特性**
+>
+> - 关键数据记录：开关日志、控制台、统一写在文件中
+> - 记录运行时信息，每日归档、分类等
+> - 不要阻塞收集日志---->异步功能
+> - 支持APP的日志框架：统一接口层（类似JDBC（统一接口层）---->数据库驱动（具体实现））
+
+**市面上的常见日志框架（包括日志门面和日志实现）；**
+
+JUL、JCL、Jboss-logging、logback、log4j、log4j2、slf4j....
+
+- **slf4j：**simple logging facade for java
+
+- SpringBoot选用 **SLF4j和logback**；
+
+### 1、SLF4J使用
+
+#### 1.SLF4J的配置文件
+
+[SLF4J官方文档](http://www.slf4j.org/manual.html)
+
+- 每一个日志的实现框架都有自己的配置文件。使用slf4j以后，**配置文件还是做成日志实现框架自己本身的配置文件；**
+
+![img](D:\GitHub\Notes\WithBeingIT\_static\concrete-bindings.png)
+
+#### 2.桥接旧版API
+
+> SLF4J附带了几个桥接模块，使得我的APP依赖的 某些依赖于SLF4J以外的日志API 的组件，变成依赖于SLF4J
+>
+> 简言之，其他框架（Spring（commons-logging）、Hibernate（jboss-logging）、MyBatis、xxxx），用的抽象层（日志门面）日志框架统一换为SLF4J
+
+[官方文档]()的解决方案
+
+![img](D:\GitHub\Notes\WithBeingIT\_static\legacy.png)
+
+**如何让系统中所有的日志都统一到slf4j；**
+
+1、将系统中其他日志框架**先排除**出去；
+
+2、用**中间包来替换原有的日志框架**；
+
+3、我们导入slf4j其他的实现
+
+## 四、Spring Boot与Web开发（转正的开始）
+
+> 最快把应用用起来（创建HelloWord）
+>
+> 1. 创建SpringBoot应用，选中我们需要的模块
+> 2. SpringBoot已经设置好各种场景（），并且通过XXXAutoConfiguration和XXXProperties自动配置
+> 3. 编写自己的业务代码即可
+
+### 1.后续学习思路
+
+- 先实现一个实际开发场景
+- 根据上述场景讲解springboot的web开发原理
+
+#### 知识点：
+
+- restful-crud-实验
+  - 实现restful增、删、改、查
+  - [BootStrap](https://getbootstrap.com/docs/4.4/examples/)：登录页面、仪表板
+
+### 2.SpringBoot对静态文件的映射规则
+
+**关键知识点**
+
+- 静态资源对象：WebView资源（HTML【index.html】,CSS,JavaScript）、栏目窗口图标
+- staticPathPattern：静态路径模式
+- StaticLocations：静态资源位置
+- ResourceHandler：资源处理程序
+
+#### 1.SpringBoot的WebMVCAutoConfigration类
+
+- 查找类快捷键：ctrl+shift+n
+- 键入：webMVCAuto*
+- 找到AddResourceHandlers：添加资源处理程序
+
+```java
+//copy源码：
+ public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            if (!this.resourceProperties.isAddMappings()) {
+                logger.debug("Default resource handling disabled");
+            } else {
+                Duration cachePeriod = this.resourceProperties.getCache().getPeriod();
+                CacheControl cacheControl = this.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();
+                if (!registry.hasMappingForPattern("/webjars/**")) {
+                    this.customizeResourceHandlerRegistration(registry.addResourceHandler(new String[]{"/webjars/**"}).addResourceLocations(new String[]{"classpath:/META-INF/resources/webjars/"}).setCachePeriod(this.getSeconds(cachePeriod)).setCacheControl(cacheControl));
+                }
+
+                String staticPathPattern = this.mvcProperties.getStaticPathPattern();
+                if (!registry.hasMappingForPattern(staticPathPattern)) {
+                    this.customizeResourceHandlerRegistration(registry.addResourceHandler(new String[]{staticPathPattern}).addResourceLocations(WebMvcAutoConfiguration.getResourceLocations(this.resourceProperties.getStaticLocations())).setCachePeriod(this.getSeconds(cachePeriod)).setCacheControl(cacheControl));
+                }
+
+            }
+        }
+```
+
+##### WebMVCAutoConfiguration有两种导入WebJars的方法
+
+1. webjars
+
+   - 默认资源目录
+
+   ```java
+   //staticPathPattern
+   staticPathPattern = "/webjars/**"
+   //StaticLocations
+   "classpath:/META-INF/resources/webjars/"
+   ```
+
+2. 静态资源文件夹：
+
+   - getStaticLocations---->StaticLocations---->"CLASSPATH_RESOURCE_LOCATIONS"路径（）
+
+   ```java
+   //staticPathPattern
+   staticPathPattern = "/**"
+   //StaticLocations
+   private static final String[] CLASSPATH_RESOURCE_LOCATIONS = new String[]{
+       "classpath:/META-INF/resources/",
+       "classpath:/resources/", 
+       "classpath:/static/", 
+       "classpath:/public/"
+   };
+   //以及
+   "/"   //------>项目的根目录
+   ```
+   
+   - 以"classpath:/static/"为例：localhost:8080/asserts/js/bootstrap.min.js
+     - 注意不能访问localhost:8080/**static/**asserts/js/bootstrap.min.js
+   
+   - 以"classpath:/META-INF/resources/"为例：localhost:8080/asserts/js/bootstrap.min.js
+   
+   ![1584672822841](D:\GitHub\SAEngineer\SAEngineer\_static\1584672822841.png)
+
+#### 2.WebJars
+
+##### 1.什么是webjars
+
+- 以jar包的方式引入静态资源
+- [WebJars官网](https://www.webjars.org/)
+- [WebJars——web端静态资源的jar包](https://blog.csdn.net/eff666/article/details/70183481)
+
+![1584627229475](D:\GitHub\SAEngineer\SAEngineer\_static\1584627229475.png)
+
+##### 2.idea的Maven工程的jquery文件目录
+
+![1584627526957](D:\GitHub\SAEngineer\SAEngineer\_static\1584627526957.png)
+
+##### 3.访问其中一个默认静态资源
+
+- 启动程序
+- 浏览器键入：localhost:8080/webjars/jquery/3.4.1/jquery.js
+
+#### 3.欢迎页映射
+
+- 简言之：静态资源文件夹下的index.html会被当作欢迎页访问
+- 欢迎页； 静态资源文件夹下的所有index.html页面；被"/**"映射；
+
+- localhost:8080 也可找到index页面
+
+```java
+@Bean
+public WelcomePageHandlerMapping welcomePageHandlerMapping(ApplicationContext applicationContext, FormattingConversionService mvcConversionService, ResourceUrlProvider mvcResourceUrlProvider) {
+            WelcomePageHandlerMapping welcomePageHandlerMapping = new WelcomePageHandlerMapping(new TemplateAvailabilityProviders(applicationContext), applicationContext, this.getWelcomePage(), this.mvcProperties.getStaticPathPattern());
+            welcomePageHandlerMapping.setInterceptors(this.getInterceptors(mvcConversionService, mvcResourceUrlProvider));
+            return welcomePageHandlerMapping;
+        }
+
+//getWelcomePage()函数
+private Optional<Resource> getWelcomePage() {
+            String[] locations = WebMvcAutoConfiguration.getResourceLocations(this.resourceProperties.getStaticLocations());
+            return Arrays.stream(locations).map(this::getIndexHtml).filter(this::isReadable).findFirst();
+        }
+
+        private Resource getIndexHtml(String location) {
+            return this.resourceLoader.getResource(location + "index.html");
+        }
+//location+"index.html"
+```
+
+#### 4.配置浏览器栏目窗口的图标（springboot2以上函数更名了）
+
+### 3.模板引擎
+
+> 当前SpringBoot项目不支持JPS
+>
+> - springboot不是web项目
+> - springboot嵌入式tomcat不支持JSP
+
+**模板引擎定义简言之：**
+
+- **Template+Data经过TemplateEngine输出为新的HTML**
+- SpringBoot推荐的Thymeleaf；
+
+#### 1.Thymeleaf模板引擎
+
+##### 1.引入Thymeleaf
+
+- 查看语法[Thymeleaf官方文档](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)
+- Github搜索：thymeleaf（主程序）和thymeleaf-layout-dialect（布局功能主程序）
+- 在POM文件中添加依赖（<dependence>），修改默认版本(<properties>)
+
+##### 2.使用Thymeleaf
+
+- 添加controller
+
+  ```java
+  
+  /**
+   * Demo web class
+   *
+   * @author wangshuai
+   * @date 2020/03/20
+   */
+  @Controller
+  public class WebController {
+  
+      @ResponseBody
+      @RequestMapping("/hello")
+      public String helloWeb(){
+          return "hello web!";
+      }
+      /**
+       * 设置场景
+       * 查出一些数据，在页面显示
+       */
+      @RequestMapping("/success")
+      public String success1(Map<String,Object> map){
+          map.put("first","helloword");
+          map.put("wangshuai","成功");
+          return "success";
+      }
+  }
+  ```
+
+- 添加HTML页面
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+      <title>成功获取数据</title>
+  </head>
+  <body>
+      <h1 th:text="${wangshuai}">标题1</h1>
+      <!--以下是thyemleaf语法-->
+      <!--th:text="${first}"表示该div标签的text属性会被替换成"${first}"-->
+      <!--可用“th:属性”替换HTML任意属性；其次，替换的属性无论原HTML标签是否存在-->
+      <div th:text="${first}">此处写欢迎信息(text信息会被th:text="${first}"替换)</div>
+      <!--优势1：前端自己写HTML;后端返回数据（此例是map）即可---->前后端分离-->
+  </body>
+  </html>
+  ```
+
+##### 3.Thymeleaf优先级
+
+- `<!--可用“th:属性”替换HTML任意属性；其次，替换的属性无论原HTML标签是否存在-->`
+
+- [属性优先级----官方文档](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#attribute-precedence)
+
+  当您`th:*`在同一个标记中写入多个属性时会发生什么？例如：
+
+  ```html
+  <ul>
+    <li th:each="item : ${items}" th:text="${item.description}">Item description here...</li>
+  </ul>
+  ```
+
+  我们希望该`th:each`属性在之前执行，`th:text`以便获得所需的结果，但是考虑到HTML / XML标准没有给标记中的属性写入顺序赋予任何含义，因此*优先级*必须在属性本身中建立机制，以确保这将按预期工作。
+
+  因此，所有Thymeleaf属性都定义了一个数字优先级，该优先级确定了它们在标记中执行的顺序。该命令是：
+
+  ![1584688849353](D:\GitHub\SAEngineer\SAEngineer\_static\1584688849353.png)
+
+##### 4.表达式语法
+
+[官方文档与用例](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#standard-expression-syntax)
+
+我们已经看到了用这种语法表示的两种有效属性值：消息和变量表达式：
+
+```html
+<p th:utext="#{home.welcome}">Welcome to our grocery store!</p>
+
+<p>Today is: <span th:text="${today}">13 february 2011</span></p>
+```
+
+但是有更多类型的表达式，还有更多有趣的细节可以了解我们已经知道的表达式。首先，让我们看一下标准表达式功能的快速摘要：
+
+- 简单表达式：
+  - 变量表达式： `${...}`————>1.变量；2.调用函数；3.数组；4.Map等
+  - 选择变量表达式： `*{...}`————>相当于$但是有一项补充功能：this
+  - 消息表达： `#{...}`————>获取国际化内容
+  - 链接URL表达式： `@{...}`————>定义URL
+  - 片段表达式： `~{...}`
+- 文字（字面量）
+  - 文本文字：`'one text'`，`'Another one!'`，...
+  - 数字文字：`0`，`34`，`3.0`，`12.3`，...
+  - 布尔文字：`true`，`false`
+  - 空文字： `null`
+  - 文字标记：`one`，`sometext`，`main`，...
+- 文本操作：
+  - 字符串串联： `+`
+  - 文字替换： `|The name is ${name}|`
+- 算术运算：
+  - 二元运算符：`+`，`-`，`*`，`/`，`%`
+  - 减号（一元运算符）： `-`
+- 布尔运算：
+  - 二元运算符：`and`，`or`
+  - 布尔否定（一元运算符）： `!`，`not`
+- 比较运算：
+  - 比较：`>`，`<`，`>=`，`<=`（`gt`，`lt`，`ge`，`le`）
+  - 等号运算符：`==`，`!=`（`eq`，`ne`）
+- 条件运算符：
+  - 如果-则： `(if) ? (then)`
+  - 如果-则-否则： `(if) ? (then) : (else)`
+  - 默认： `(value) ?: (defaultvalue)`
+- 特殊令牌：
+  - 无操作： `_`
+
+所有这些功能都可以组合和嵌套：
+
+```properties
+'User is of type ' + (${user.isAdmin()} ? 'Administrator' : (${user.type} ?: 'Unknown'))
+```
+
+### 4.SpringMVC自动配置原理
+
+> SpringBoot底层对SpringMVC
+>
+> - 做了哪些自动配置
+> - 如何扩展
+> - 如何定制
+>
+> 学习方式：
+>
+> 1. 自己看源码
+> 2. 看[官方文档Developing Web Applications](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-developing-web-applications)（当然更可行）
+
+```
+Spring MVC Auto-configuration
+Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
+
+The auto-configuration adds the following features on top of Spring’s defaults:
+
+Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
+
+Support for serving static resources, including support for WebJars (covered later in this document)).
+
+Automatic registration of Converter, GenericConverter, and Formatter beans.
+
+Support for HttpMessageConverters (covered later in this document).
+
+Automatic registration of MessageCodesResolver (covered later in this document).
+
+Static index.html support.
+
+Custom Favicon support (covered later in this document).
+
+Automatic use of a ConfigurableWebBindingInitializer bean (covered later in this document).
+
+If you want to keep those Spring Boot MVC customizations and make more MVC customizations (interceptors, formatters, view controllers, and other features), you can add your own @Configuration class of type WebMvcConfigurer but without @EnableWebMvc.
+
+If you want to provide custom instances of RequestMappingHandlerMapping, RequestMappingHandlerAdapter, or ExceptionHandlerExceptionResolver, and still keep the Spring Boot MVC customizations, you can declare a bean of type WebMvcRegistrations and use it to provide custom instances of those components.
+
+If you want to take complete control of Spring MVC, you can add your own @Configuration annotated with @EnableWebMvc, or alternatively add your own @Configuration-annotated DelegatingWebMvcConfiguration as described in the Javadoc of @EnableWebMvc.
+```
+
+org.springframework.boot.autoconfigure.web：web场景的所有配置
+
+## 附录
+
+### 1.重要快捷键
+
+- 按照名称查找类快捷键：ctrl+shift+n
+- 在类中按方法名称查找：ctrl+F12--->直接输入方法名

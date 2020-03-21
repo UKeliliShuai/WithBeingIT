@@ -17,6 +17,14 @@
 
 【源码分析——待理解】[Spring IOC 容器源码分析](https://juejin.im/post/5bc5c88df265da0b001f5dee#heading-12)
 
+## Spring MVC【入门】就这一篇！
+
+[Web开发模式【Mode I 和Mode II的介绍、应用案例】](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247483775&idx=1&sn=c9d7ead744c6e0c3ab2fe55c09bbe61f&chksm=ebd7407edca0c9688f3870d895b760836101271b912899821fb35c5704fe215da2fc5daff2f9#rd)
+
+[Spring MVC【入门】](https://www.jianshu.com/p/91a2d0a1e45a)
+
+[【Spring】Spring MVC原理及配置详解](https://blog.csdn.net/jianyuerensheng/article/details/51258942)
+
 ## SpringBoot
 
 [Spring Boot最核心的27个干货注解，你了解多少？](https://zhuanlan.zhihu.com/p/67976768)
@@ -83,3 +91,12 @@ SpringBoot单元测试：[使用 Spring 进行单元测试](https://www.ibm.com/
 
 [【小家Spring】Spring注解驱动开发---向Spring Ioc容器中注册Bean的7种方式](https://fangshixiang.blog.csdn.net/article/details/86702407)
 
+自动配置的jackson是什么：[spring boot 最佳实践（一）--使用jackson](https://blog.csdn.net/swordcenter/article/details/72368905)
+
+- 目前java json解析工具有阿里的fastjson，google的GSON，以及SpringMVC 默认的解析工具Jackson。
+
+## Spring Boot---(11)SpringBoot使用Junit单元测试
+
+- [测试方法](https://blog.csdn.net/weixin_39800144/article/details/79241620)
+- 测试的时候，整个程序还是处于运行状态，可以从容器中拿东西存东西
+  - 简言之：不是破碎的代码块，整个程序仍然是个整体
