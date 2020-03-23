@@ -1170,11 +1170,9 @@ private Optional<Resource> getWelcomePage() {
   @Controller
   public class WebController {
   
-      @ResponseBody
-      @RequestMapping("/hello")
-      public String helloWeb(){
-          return "hello web!";
-      }
+      //……………………其他代码
+      
+      
       /**
        * 设置场景
        * 查出一些数据，在页面显示
@@ -1187,7 +1185,7 @@ private Optional<Resource> getWelcomePage() {
       }
   }
   ```
-
+  
 - 添加HTML页面
 
   ```html
@@ -1292,6 +1290,8 @@ private Optional<Resource> getWelcomePage() {
 > 1. 自己看源码
 > 2. 看[官方文档Developing Web Applications](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-developing-web-applications)（当然更可行）
 
+#### 1.了解Spring自动配置项
+
 ```
 Spring MVC Auto-configuration
 Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
@@ -1322,6 +1322,343 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 ```
 
 org.springframework.boot.autoconfigure.web：web场景的所有配置
+
+#### 2.扩展SpringMVC配置
+
+**==编写一个配置类（@Configuration），是WebMvcConfigurerAdapter类型；不能标注@EnableWebMvc==**;
+
+既保留了所有的自动配置，也能用我们扩展的配置；
+
+```java
+//使用WebMvcConfigurerAdapter可以来扩展SpringMVC的功能
+@Configuration
+public class MyMvcConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+       // super.addViewControllers(registry);
+        //浏览器发送 /atguigu 请求来到 success
+        registry.addViewController("/atguigu").setViewName("success");
+    }
+}
+```
+
+原理：
+
+​	1）、WebMvcAutoConfiguration是SpringMVC的自动配置类
+
+​	2）、在做其他自动配置时会导入；@Import(**EnableWebMvcConfiguration**.class)
+
+​	3）、注意知识点：@Autowired(required = false)装配在方法上，则方法的参数都在容器中获取（正确的SpringBoot思维是：由容器自动注入）
+
+```java
+//WebMvcAutoConfiguration.java
+@Configuration(proxyBeanMethods = false)
+	@Import(EnableWebMvcConfiguration.class)
+	@EnableConfigurationProperties({ WebMvcProperties.class, ResourceProperties.class })
+	@Order(0)
+	public static class WebMvcAutoConfigurationAdapter implements WebMvcConfigurer {
+//EnableWebMvcConfiguration.class,它继承自“DelegatingWebMvcConfiguration：委派Web Mvc配置”
+@Configuration
+	public static class EnableWebMvcConfiguration extends DelegatingWebMvcConfiguration {
+      private final WebMvcConfigurerComposite configurers = new WebMvcConfigurerComposite();
+
+	 //从容器中获取所有的WebMvcConfigurer对象
+      @Autowired(required = false)
+      public void setConfigurers(List<WebMvcConfigurer> configurers) {
+          if (!CollectionUtils.isEmpty(configurers)) {
+              
+              //configurers实例类型它是WebMvcConfigurerComposite：Web Mvc配置复合类
+              
+              this.configurers.addWebMvcConfigurers(configurers);
+            	//一个参考实现；将所有的WebMvcConfigurer相关配置都来一起调用；  
+            	//@Override
+             // public void addViewControllers(ViewControllerRegistry registry) {
+              //    for (WebMvcConfigurer delegate : this.delegates) {
+               //       delegate.addViewControllers(registry);
+               //   }
+              }
+          }
+	}
+```
+
+​	3）、容器中所有的WebMvcConfigurer都会一起起作用；
+
+​	4）、我们的配置类也会被调用；
+
+​	效果：SpringMVC的自动配置和我们的扩展配置都会起作用；
+
+#### 3.全面接管SpringMVC配置
+
+SpringBoot对SpringMVC的自动配置不需要了，所有都是我们自己配置；所有的SpringMVC的自动配置都失效了
+
+**我们需要在配置类中添加@EnableWebMvc即可；**
+
+```java
+//使用WebMvcConfigurerAdapter可以来扩展SpringMVC的功能
+@EnableWebMvc
+@Configuration
+public class MyMvcConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+       // super.addViewControllers(registry);
+        //浏览器发送 /atguigu 请求来到 success
+        registry.addViewController("/atguigu").setViewName("success");
+    }
+}
+```
+
+原理：
+
+为什么@EnableWebMvc自动配置就失效了；
+
+1）@EnableWebMvc的核心
+
+```java
+//导入了DelegatingWebMvcConfiguration.class
+@Import(DelegatingWebMvcConfiguration.class)
+public @interface EnableWebMvc {
+```
+
+2）
+
+```java
+@Configuration
+public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
+```
+
+3）回到WebMvcAutoConfigeration类，方法签名如下：
+
+```java
+@Configuration
+@ConditionalOnWebApplication
+@ConditionalOnClass({ Servlet.class, DispatcherServlet.class,
+		WebMvcConfigurerAdapter.class })
+//容器中没有这个组件的时候，这个自动配置类才生效
+@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
+
+
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)
+@AutoConfigureAfter({ DispatcherServletAutoConfiguration.class,
+		ValidationAutoConfiguration.class })
+public class WebMvcAutoConfiguration {
+```
+
+4）、@EnableWebMvc将WebMvcConfigurationSupport组件导入进来；即，这句话@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
+
+5）、导入的WebMvcConfigurationSupport只是SpringMVC最基本的功能；
+
+### 5、如何修改SpringBoot的默认配置
+
+模式：
+
+​	1）、SpringBoot在自动配置很多组件的时候，先看容器中有没有用户自己配置的（@Bean、@Component）如果有就用用户配置的，如果没有，才自动配置；如果有些组件可以有多个（ViewResolver）将用户配置的和自己默认的组合起来；
+
+​	2）、在SpringBoot中会有非常多的xxxConfigurer帮助我们进行扩展配置
+
+​	3）、在SpringBoot中会有很多的xxxCustomizer帮助我们进行定制配置
+
+### 6、CRUD实验
+
+- 功能1：默认访问首页
+
+#### 功能1：设置默认访问首页
+
+> 两种方式：
+>
+> 1. 修改配置：通过WebMvcConfigurer配置类（推荐，可扩展性强）
+> 2. 增加控制器：添加controller
+>
+> 实现接口不用实现全部方法：[java8新特性--接口中default方法详细解读](https://blog.csdn.net/weixin_43434729/article/details/103248464)
+
+1. ##### 修改配置（一劳永逸版本）
+
+   ```java
+   @Configuration
+   public class MyMvcConfig implements WebMvcConfigurer {
+       /**
+        * MyMvcConfig配置类下的WebMvcConfigurer配置组件
+        * 属性1是：addViewControllers
+        * @return webMvcConfigurer
+        */
+       @Bean
+       public WebMvcConfigurer webMvcConfigurer(){
+           WebMvcConfigurer webMvcConfigurer = new WebMvcConfigurer() {
+               @Override
+               public void addViewControllers(ViewControllerRegistry registry) {
+                   registry.addViewController("/").setViewName("login");
+                   registry.addViewController("/index.html").setViewName("login");
+               }
+           };
+           return webMvcConfigurer;
+       }
+   }
+   ```
+
+2. ##### 增加控制器（简单）
+
+   ```java
+       /**20200323
+        * 上述疑问的实质是模板引擎的拼接字符串操作
+        * 前缀：XXXXtemplates
+        * 后缀：.html
+        * 中间：return的字符串
+        */
+       @RequestMapping({"/","/index.html"})
+       public String index(){
+           return "index";
+       }
+   ```
+
+3. 为前端html代码增加bootstrap core css
+
+   ```xml
+   <!--pom文件->
+   <!--第四步：引入webjars的bootstrap模块-->
+           <dependency>
+               <groupId>org.webjars</groupId>
+               <artifactId>bootstrap</artifactId>
+               <version>4.4.1-1</version>
+           </dependency>
+   ```
+
+   ```html
+   # login.html
+   <!DOCTYPE html>
+   <html lang="en" xmlns:th="http://www.thymeleaf.org">
+   	<head>
+   		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   		<meta name="description" content="">
+   		<meta name="author" content="">
+   		<title>Signin Template for Bootstrap</title>
+   		<!-- Bootstrap core CSS -->
+   		<link href="asserts/css/bootstrap.min.css" th:href="@{webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+   		<!-- Custom styles for this template -->
+   		<link href="asserts/css/signin.css" th:href="@{/asserts/css/signin.css}" rel="stylesheet">
+   	</head>
+   ```
+
+   ```properties
+   # 现在项目的路径名统一改为/crud/**
+   server.servlet.context-path=/crud
+   ```
+
+#### 功能2：页面国际化
+
+> 原springMVC
+>
+> 1）、**编写国际化配置文件；**(主要第一步需要自己做)
+>
+> 2）、使用ResourceBundleMessageSource管理国际化资源文件
+>
+> 3）、在页面使用fmt:message取出国际化内容
+
+1）、 国际化配置文件
+
+- 基础文件名
+- 基础文件名 _ 语言 _ 国家
+
+2）、看源码MessageSourceAutoConfigeration
+
+```java
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnMissingBean(name = AbstractApplicationContext.MESSAGE_SOURCE_BEAN_NAME, search = SearchStrategy.CURRENT)
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
+@Conditional(ResourceBundleCondition.class)
+@EnableConfigurationProperties
+public class MessageSourceAutoConfiguration {
+
+	private static final Resource[] NO_RESOURCES = {};
+
+	@Bean
+	@ConfigurationProperties(prefix = "spring.messages")
+	public MessageSourceProperties messageSourceProperties() {
+		return new MessageSourceProperties();
+	}
+//组件——MessageSourceProperties：
+public class MessageSourceProperties {
+
+	/**
+	 * Comma-separated list of basenames (essentially a fully-qualified classpath
+	 * location), each following the ResourceBundle convention with relaxed support for
+	 * slash based locations. If it doesn't contain a package qualifier (such as
+	 * "org.mypackage"), it will be resolved from the classpath root.
+	 */
+	private String basename = "messages";
+
+	/**
+	 * Message bundles encoding.
+	 */
+	private Charset encoding = StandardCharsets.UTF_8;
+```
+
+3）、在页面使用fmt:message取出国际化内容（themleaf使用#{message}）
+
+- springboot的WebMvcAutoConfigration配置了public LocaleResolver localeResolver(){}
+
+  ```java
+  //类
+  @Configuration(proxyBeanMethods = false)
+  @ConditionalOnWebApplication(type = Type.SERVLET)
+  @ConditionalOnClass({ Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class })
+  @ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
+  @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)
+  @AutoConfigureAfter({ DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class,
+  		ValidationAutoConfiguration.class })
+  public class WebMvcAutoConfiguration {
+      
+      
+      //……………………
+  @Bean
+  		@ConditionalOnMissingBean
+  		@ConditionalOnProperty(prefix = "spring.mvc", name = "locale")
+  		public LocaleResolver localeResolver() {
+  			if (this.mvcProperties.getLocaleResolver() == WebMvcProperties.LocaleResolver.FIXED) {
+  				return new FixedLocaleResolver(this.mvcProperties.getLocale());
+  			}
+  			AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+  			localeResolver.setDefaultLocale(this.mvcProperties.getLocale());
+  			return localeResolver;
+  		}
+  ```
+
+- LocaleResolver（区域解析器）设置的源码：
+
+  - 如果defaultLocale存在就是使用，且请求头的Accept-Language== null
+  - 否则使用请求头的request.getLocale();
+  - return defaultLocale;、return supportedLocale;、return requestLocale;
+
+  ```java
+  public Locale resolveLocale(HttpServletRequest request) {
+          Locale defaultLocale = this.getDefaultLocale();
+          if (defaultLocale != null && request.getHeader("Accept-Language") == null) {
+              return defaultLocale;
+          } else {
+              Locale requestLocale = request.getLocale();
+              List<Locale> supportedLocales = this.getSupportedLocales();
+              if (!supportedLocales.isEmpty() && !supportedLocales.contains(requestLocale)) {
+                  Locale supportedLocale = this.findSupportedLocale(request, supportedLocales);
+                  if (supportedLocale != null) {
+                      return supportedLocale;
+                  } else {
+                      return defaultLocale != null ? defaultLocale : requestLocale;
+                  }
+              } else {
+                  return requestLocale;
+              }
+          }
+      }
+  ```
+
+  
+
+![1584966814432](D:\GitHub\Notes\WithBeingIT\_static\1584966814432.png)
+
+- 自定义webMvc的自动配置类下的public LocaleResolver localeResolver() {即可：
+
+  
 
 ## 附录
 
