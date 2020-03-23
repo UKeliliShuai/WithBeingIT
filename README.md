@@ -14,10 +14,31 @@
 
 ## 1.Java
 
-- [JAVAschool最全的JAVA技术教程](http://www.51gjie.com/)——开源目录结构
+- [JAVAschool最全的JAVA技术教程](http://www.51gjie.com/)——笔者可以参考的开源目录结构
+
+- [HOW2J.CN](https://how2j.cn/)——涵盖Java低中高、前后端、数据库、中间件、分布式等知识
+
 - [【干货】你必须掌握的 21 个 Java 核心技术！](https://mp.weixin.qq.com/s/U85Ip73WF1uGEEggRp0deg)
 
+- [大学四年因为知道了这32个网站，我成了别人眼中的大神](https://blog.csdn.net/sinat_33921105/article/details/103899234)
+
+- [关于高效学习编程，我又有了最新的几点思考！](https://www.bilibili.com/read/cv5198726?column_from=5&from=upFeed&native.theme=0&night=0)
+
+- [GitHub中文排行榜，帮助你发现高分优秀中文项目，GitHub-Chinese-Top-Charts](https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts)
+
+  ![GitHub中文排行榜](https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts/raw/master/banner.png)
+
 ### 基础知识
+
+- this关键字加与不加到底有什么区别？[Java中this关键字使用小结](https://www.cnblogs.com/zheting/p/7751752.html)
+
+  - 虽然this调用方法可以省略this关键字，但是JAVA编译器会自己添加上
+
+    - 简言之，原来学习C++时不加this（实例对象）就使用方法的习惯不好
+
+    - 正确的方法调用语法是：对象.方法名（）----->this.方法名
+
+  - 内部类/匿名类调用外部类的this：类名.this.调用对象
 
 - [高级](https://github.com/UKeliliShuai/WithBeingIT/blob/master/ElementaryKnowledge/%E9%AB%98%E7%BA%A7.md)
 
@@ -46,8 +67,22 @@
 ##### 基本概念
 
 - [10分钟读懂进程线程、同步异步、阻塞非阻塞、并发并行](https://mp.weixin.qq.com/s/c3YuR8pWKn4RpseGIWNxvw)
+
 - 线程安全定义：[java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
+
 - 死锁（银行家算法）：[漫话：如何给女朋友介绍什么是死锁](https://mp.weixin.qq.com/s/SsU8Ro-Uf2WDSjkPv4lptQ)
+
+- [当初我要是这么学习「进程和线程」就好了（附带思维导图）](https://mp.weixin.qq.com/s/zVi45pZka_kPpKIoNXNVBA)
+
+  - 进程是一个过程，一个进程就是一个正在执行的程序的实例，进程也包括程序计数器、寄存器和变量的当前值
+
+  - 线程的程序计数器、堆栈指针、寄存器和状态
+
+    > 线程会有程序计数器，用来记录接着要执行哪一条指令；线程还拥有寄存器，用来保存线程当前正在使用的变量；线程还会有堆栈，用来记录程序的执行路径。
+
+
+  - 墨菲法则(Murphy)、竞态条件、互斥(mutual exclusion) 条件
+  - Java 中的 native 关键字底层也是 C 或 C++ 编写的源码。
 
 ##### 知识点：
 
@@ -57,6 +92,10 @@
 
 - [JVM 史上最最最完整深入解析](https://mp.weixin.qq.com/s/EydeGMpxd_zYv11noPAABA)
 
+### 新特性
+
+- [java8新特性--接口中default方法详细解读](https://blog.csdn.net/weixin_43434729/article/details/103248464)
+
 ## 2.数据库
 
 ### SQL语言
@@ -65,11 +104,15 @@
 
 ## 3.操作系统
 
-- [操作系统的极简教程](https://mp.weixin.qq.com/s/p7AUCjig126UFOCruyD15A)
+- [[当初我要是这么学习：操作系统的极简教程](https://mp.weixin.qq.com/s/p7AUCjig126UFOCruyD15A)
 - Github/me115/[Linux工具快速教程](https://linuxtools-rst.readthedocs.io/zh_CN/latest/)
 - [windows——CMD常用命令](https://blog.csdn.net/LJFPHP/article/details/78818696)
 
 ## 4.Design
+
+### 如何阅读源码
+
+- [看完这篇，别人的开源项目结构应该能看懂了](https://www.bilibili.com/read/cv5236887?share_medium=android&share_source=qq&bbid=XYDF6EFDC05FD153DFAD6209F0A69D4059A66&ts=1584942634271)
 
 ### 设计模式
 
@@ -163,6 +206,18 @@
 
 ## 7.面试
 
+[最全干货：从写简历，到面试、谈薪酬的那些技巧和防坑指南](https://mp.weixin.qq.com/s/6pgIo1rrqH6WQOZLv_yhIw)
+
 ## 8.Android
 
 - [Handler都没搞懂，拿什么去跳槽啊？](https://juejin.im/post/5c74b64a6fb9a049be5e22fc#heading-0)
+
+## 9.Node.js
+
+[七天学会NodeJS](https://nqdeng.github.io/7-days-nodejs/)
+
+[Node.js是用来做什么的？](https://www.zhihu.com/question/33578075)
+
+## 10.MATLAB
+
+[File Exchange](https://www.mathworks.com/matlabcentral/fileexchange/)
