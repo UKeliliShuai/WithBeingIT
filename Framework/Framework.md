@@ -100,3 +100,14 @@ SpringBoot单元测试：[使用 Spring 进行单元测试](https://www.ibm.com/
 - [测试方法](https://blog.csdn.net/weixin_39800144/article/details/79241620)
 - 测试的时候，整个程序还是处于运行状态，可以从容器中拿东西存东西
   - 简言之：不是破碎的代码块，整个程序仍然是个整体
+
+## [SpringBoot系列: url重定向和转发](https://www.cnblogs.com/harrychinese/p/SpringBoot_redirect_and_forward.html)
+
+## [详解 Spring Session 架构与设计](https://www.ibm.com/developerworks/cn/web/wa-spring-session-architecture-and-design/index.html)
+
+## [使用RESTful风格开发Java Web](https://www.jianshu.com/p/91600da4df95)
+
+[REST风格的软件架构](https://www.jianshu.com/p/ff18818a4c60)
+
+## [分清 URI、URL 和 URN](https://www.ibm.com/developerworks/cn/xml/x-urlni.html)
+
