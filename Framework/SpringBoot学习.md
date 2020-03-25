@@ -1658,7 +1658,249 @@ public class MessageSourceProperties {
 
 - 自定义webMvc的自动配置类下的public LocaleResolver localeResolver() {即可：
 
-  
+#### 功能3：登录功能
+
+> 功能描述：
+>
+> 1. 设置用户名和密码（就不访问数据库了）
+> 2. 登录到后台主页
+> 3. 点击列表页面展示所有的员工记录
+
+##### 1.添加Controller
+
+```java
+@Controller
+public class LoginController {
+
+    /**
+     * 原映射方式为(比较麻烦)：
+     * @RequestMapping(value = "/user/login",method = RequestMethod.POST)
+     * 使用RESTful风格处理请求
+     * @return
+     */
+    @PostMapping("/user/login")
+    /**
+     * @RequestParam
+     * 1.表示请求参数必须提交
+     * 2.且返回值类型必须为String：修改html<name="username"   name="password">
+     */
+    public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        Map<String ,Object> map){
+        if(!StringUtils.isEmpty(username) && password.equals("wangshuai")){
+            return "dashboard";
+        }else{
+            map.put("msg","用户名密码错误");
+            return "login";
+        }
+    }
+    /**问题1：为什么登录失败后样式变了
+     * css使用相对路径
+     * 修改<link href="asserts/css/bootstrap.min.css" th:href="@{webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+     * 为<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+     * 表示从当前项目资源寻找
+     */
+    /**问题2：为什么点击sign in按钮就能发送“http://localhost:8080/crud/user/login”请求
+     * [Form表单、四种常见的POST请求提交数据方式](https://blog.csdn.net/bigtree_3721/article/details/82809459)
+     */
+}
+```
+
+##### 2.表单提交
+
+```html
+login.html文件夹下
+
+
+<form class="form-signin" action="dashboard.html" th:action="@{/user/login}" method="post">
+			<img class="mb-4" src="asserts/img/bootstrap-solid.svg" th:src="@{/asserts/img/bootstrap-solid.svg}" alt="" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
+			<!--1.设置颜色2.取出消息3.增加显示时机判断(if的优先级+工具对象)-->
+			<p style="color: red;" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+			<label class="sr-only" th:text="#{login.username}">Username</label>
+			<input type="text" name="username" class="form-control" placeholder="Username" th:placeholder="#{login.username}" required="" autofocus="">
+			<label class="sr-only"th:text="#{login.password}">Password</label>
+			<input type="password" name="password" class="form-control" placeholder="Password" th:placeholder="#{login.password}" required="">
+			<div class="checkbox mb-3">
+				<label>
+			<!--单标签不能用th:text="#{login.remember}"-->
+          <input type="checkbox" value="remember-me" > [[#{login.remember}]]
+        </label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.btn}">Sign in</button>
+			<p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+			<!--注意此处一定是请求index.html,因为之前的路由请求就是这个-->
+			<a class="btn btn-sm" th:href="@{/index.html(l='zh_CN')}">中文</a>
+			<a class="btn btn-sm" th:href="@{/index.html(l='en_US')}">English</a>
+		</form>
+```
+
+##### 3.加载CSS样式资源
+
+```java
+/**问题1：为什么登录失败后样式变了(没加载出来)
+     * css使用相对路径
+     * 修改<link href="asserts/css/bootstrap.min.css" th:href="@{webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+     * 为<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+     * 表示从当前项目资源寻找
+     */
+```
+
+##### 4.重定向（与转发）
+
+> 场景：
+>
+> - 表单提交的url为：http://localhost:8080/crud/user/login
+>
+> - 目前刷新页面会一直提示：是否重新提交表单
+>
+> 解决方案：重定向，思想：
+>
+> - SpringMVC配置中增加
+>
+>   `registry.addViewController("/main.html").setViewName("dashboard");`
+>
+> - 请求的是http://localhost:8080/crud/user/login，但是控制器返回"redirect:/main.html"（原本是返回视图名“dashboard"）
+>
+> - 也就是“重定向到---->当前项目下---->main.html路径”
+>
+> 重定向与转发的区别：
+>
+> - [SpringBoot系列: url重定向和转发](https://www.cnblogs.com/harrychinese/p/SpringBoot_redirect_and_forward.html)
+>
+> - redirect 和 forward的区别:
+>
+>   1.重定向 redirect: 完整的重定向包含两次request-response过程, 第一次是访问原始url, 第二次是服务器通知客户端访问重定向后的url. 重定向完成后, 浏览器的地址是重定向后的url, 而不是原始的url.
+>
+>   - 重定向的使用场景: 因为重定向会修改浏览器地址, 所以 form 提交应该使用重定向, 以免用户刷新页面导致form重复提交.
+>
+>   2. 转发 forward: 完整的转发仅包含一次 request-response 过程, 用户发出request后, 服务器端视图函数先处理自己的逻辑, 然后在服务器端又调用另一个视图函数, 最后将response返回给浏览器.
+
+```java
+if(!StringUtils.isEmpty(username) && password.equals("wangshuai")){
+            /**
+             * redirect:表示前缀
+             * /表示当前项目
+             * main.html表示urlpath
+             */
+            return "redirect:/main.html";
+        }else{
+            map.put("msg","用户名密码错误");
+            return "login";
+        }
+```
+
+##### 5.拦截器机制
+
+> 登陆状态检查
+>
+> 做登录状态检查必须添加HttpSession session来记住请求的状态
+>
+> 补充：[从零开始的Spring Session(一)](http://blog.didispace.com/spring-session-xjf-1/)、[详解 Spring Session 架构与设计](https://www.ibm.com/developerworks/cn/web/wa-spring-session-architecture-and-design/index.html)
+>
+> 注意： registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+>         .excludePathPatterns("/index.html","/","/user/login").excludePathPatterns("/asserts/**");
+
+第一步：增加会话形参
+
+```java
+public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        Map<String ,Object> map,
+                        HttpSession session){
+```
+
+第二步：实现拦截器组件
+
+```
+public class LoginHandlerInterceptor implements HandlerInterceptor {
+    /**
+     * 目标方法执行之前执行
+     * 弹幕中说：AOP和这个是一个原理，我看也挺像的！
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        /**操作request可以获取到的属性有：
+         * session
+         * Attribute
+         */
+        Object user = request.getSession().getAttribute("userLogined");
+        if(user == null){
+            request.setAttribute("msg","请先登录您的账户！");
+            /**未登录，返回登陆首页
+             * getRequestDispatcher获取请求转发器
+             *      其中getRequestDispatcher不像普通javaBean获取属性值，不带参数
+             *      而是获取有指向的RequestDispatcher("/index.html")----->理解为向量
+             * 将操作完的request转发(forward)
+             */
+            request.getRequestDispatcher("/index.html").forward(request,response);
+            /**系统调试
+             * 问题：为什么getRequestDispatcher要加上String类型
+             * 结果：通过观看源码难以接受，似懂非懂的
+             * 方式：
+             * 1.查看声明与实现，注意接口集成关系
+             * 2.直接debug调试
+             */
+            return false;
+        }else{
+            //已登录，放行请求
+            return true;
+        }
+    }
+}
+```
+
+第三步：配置WebMvc拦截器
+
+```java
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        /**SpringBoot自动拦截静态资源
+         * 拦截器机制的理解：
+         * 1.除了excludePathPatterns("/index.html","/","/user/login")
+         * 2.所有的addPathPatterns("/**")都要经过拦截器
+         * 3.自定义拦截器内部的public boolean preHandle(...)函数
+         * 4.springboot2.0以上要设置静态资源放行
+         */
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+        .excludePathPatterns("/index.html","/","/user/login").excludePathPatterns("/asserts/**");
+    }
+```
+
+##### 6.设置主页用户名
+
+- dashboard.html:`th:text="${session.userLogined}"`
+
+#### 功能4：员工列表
+
+##### 1.实验要求：
+
+1）、RestfulCRUD：CRUD满足Rest风格；
+
+- [使用RESTful风格开发Java Web](https://www.jianshu.com/p/91600da4df95)
+
+URI：  /资源名称/资源标识       HTTP请求方式区分对资源CRUD操作
+
+|      | 普通CRUD（uri来区分操作） | RestfulCRUD       |
+| ---- | ------------------------- | ----------------- |
+| 查询 | getEmp                    | emp---GET         |
+| 添加 | addEmp?xxx                | emp---POST        |
+| 修改 | updateEmp?id=xxx&xxx=xx   | emp/{id}---PUT    |
+| 删除 | deleteEmp?id=1            | emp/{id}---DELETE |
+
+2）、实验的请求架构;
+
+| 实验功能                             | 请求URI | 请求方式 |
+| ------------------------------------ | ------- | -------- |
+| 查询所有员工                         | emps    | GET      |
+| 查询某个员工(来到修改页面)           | emp/1   | GET      |
+| 来到添加页面                         | emp     | GET      |
+| 添加员工                             | emp     | POST     |
+| 来到修改页面（查出员工进行信息回显） | emp/1   | GET      |
+| 修改员工                             | emp     | PUT      |
+| 删除员工                             | emp/1   | DELETE   |
+
+##### 2.员工列表
 
 ## 附录
 

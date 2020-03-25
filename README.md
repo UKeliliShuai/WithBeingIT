@@ -30,6 +30,14 @@
 
 ### 基础知识
 
+- [Java实参和形参与传值和传引用](https://blog.csdn.net/wanliguodu/article/details/55653876)
+
+  > **1）形参为基本类型时，对形参的处理不会影响实参。**
+>
+  > **2）形参为引用类型时，对形参的处理会影响实参。**
+>
+  > **3）String,Integer,Double等immutable类型的特殊处理，可以理解为值传递，形参操作不会影响实参对象。**
+
 - this关键字加与不加到底有什么区别？[Java中this关键字使用小结](https://www.cnblogs.com/zheting/p/7751752.html)
 
   - 虽然this调用方法可以省略this关键字，但是JAVA编译器会自己添加上
@@ -208,6 +216,8 @@
 
 [最全干货：从写简历，到面试、谈薪酬的那些技巧和防坑指南](https://mp.weixin.qq.com/s/6pgIo1rrqH6WQOZLv_yhIw)
 
+[一份来自亚马逊工程师的Google面试指南](http://www.cocoachina.com/articles/897134?filter=rec)、[[译] Coding Interview University 一套完整的学习手册帮助自己准备 Google 的面试](https://github.com/jwasham/coding-interview-university/blob/master/translations/README-cn.md)
+
 ## 8.Android
 
 - [Handler都没搞懂，拿什么去跳槽啊？](https://juejin.im/post/5c74b64a6fb9a049be5e22fc#heading-0)
@@ -221,3 +231,11 @@
 ## 10.MATLAB
 
 [File Exchange](https://www.mathworks.com/matlabcentral/fileexchange/)
+
+## 11.HTML
+
+[HTML rel属性值释义大全](https://www.zhangxinxu.com/wordpress/2019/06/html-a-link-rel/)
+
+[Form表单、四种常见的POST请求提交数据方式](https://blog.csdn.net/bigtree_3721/article/details/82809459)
+
+[EL表达式 （详解）](https://blog.csdn.net/qwerasdf123/article/details/4189889)
