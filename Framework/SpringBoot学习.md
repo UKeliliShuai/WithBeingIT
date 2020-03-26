@@ -1,3 +1,5 @@
+
+
 # SpringBoot学习
 
 [TOC]
@@ -1901,6 +1903,200 @@ URI：  /资源名称/资源标识       HTTP请求方式区分对资源CRUD操�
 | 删除员工                             | emp/1   | DELETE   |
 
 ##### 2.员工列表
+
+> 概述
+>
+> 1. 在后台主页面，点击Customers查询所有员工信息
+> 2. 查出所有员工，来到列表页面
+> 3. 在列表页面对员工信息进行增删改查
+
+- 思考了：@Autowired原理
+- 思考了：Model Map ModelMap 页面传值
+- 技巧：按下alt+enter，自动introduce local variable(引入局部变量)
+
+```java
+package com.wangshuai.springboot.controller;
+
+import com.wangshuai.springboot.dao.EmployeeDao;
+import com.wangshuai.springboot.entities.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Collection;
+
+@Controller
+public class EmployeeController {
+    /**
+     * @Autowired
+     * 我所疑问的是，它
+     * 1.自动装配了什么
+     * 2.如何实现自动装配的
+     * 3.自己完全没有意识到什么时候该用 @Autowired
+     * 一点发现：
+     * @Autowired 注解的作用是由AutowiredAnnotationBeanPostProcessor实现的
+     * 它可以被标注在构造函数、属性、setter方法或配置方法上，用于实现依赖自动注入。
+     * 至于依赖注入，在一个类中很少去使用new关键字去创建对象了
+     * 而是通过IoC解耦
+     * --------------------------
+     * 其实最后的挣扎为什么？凭什么使用@Autowired注解
+     * EmployeeDao employeeDao;是一个声明，如果不实例化，并不能调用实例方法
+     * 但是有了@Autowired注解，容器帮我们管理EmployeeDao实例
+     * **总结：从容器中拿，避免了在不同类中凌乱地创建多个对象**
+     * 至于装配错误，Google有很多解释方法
+     */
+    @Autowired
+    EmployeeDao employeeDao;
+    /**
+     *
+     * @return 查询所有员工,并返回列表页面
+     */
+    @GetMapping("/emps")
+    public String list(Model model){
+        /**技巧
+         * 写出employeeDao.getAll();表达式
+         * 按下alt+enter
+         * 自动introduce local variable(引入局部变量)
+         */
+        Collection<Employee> employees = employeeDao.getAll();
+        /**页面传值
+         * employees要放在请求域中共享
+         */
+        model.addAttribute("emps", employees);
+        return "emp/list";
+    }
+}
+```
+
+##### 3.侧边栏与顶边栏目公共部分抽取出来
+
+> 参考Thymleaf官方文档：8 Template Layout
+
+1. Defining and referencing fragments
+
+   **定义：**
+
+   ```html
+   方式1:使用片段名
+   <!DOCTYPE html>
+   
+   <html xmlns:th="http://www.thymeleaf.org">
+   
+     <body>
+     
+       <div th:fragment="copy">
+         &copy; 2011 The Good Thymes Virtual Grocery
+       </div>
+     
+     </body>
+     
+   </html>
+   方式2：使用选择器（对应下文的写法3）
+   ...
+   <div id="copy-section">
+     &copy; 2011 The Good Thymes Virtual Grocery
+   </div>
+   ...
+   ```
+
+   **引入：**
+
+   ```html
+   写法1：
+   <body>
+   
+     ...
+   
+     <div th:insert="~{footer :: copy}"></div>
+     
+   </body>
+   <!-------------------------------------------------->
+   写法2：
+   <body>
+   
+     ...
+   
+     <div th:insert="footer :: copy"></div>
+     
+   </body>
+   <!-------------------------------------------------->
+   写法3：
+   <body>
+   
+     ...
+   
+     <div th:insert="~{footer :: #copy-section}"></div>
+     
+   </body>
+   ```
+
+2. Difference between th:insert and th:replace (and th:include)
+
+   - `th:insert` 最简单：它将简单地将指定的片段作为其host标签的主体插入。
+   - `th:replace`实际上*将*其主机标签*替换*为指定的片段。
+   - `th:include`与相似`th:insert`，但不插入片段，而是仅插入该片段的*内容*。
+
+   **原标签如下：**
+
+   ```html
+   <footer th:fragment="copy">
+     &copy; 2011 The Good Thymes Virtual Grocery
+   </footer>
+ 
+   ```
+   **引入方式：**
+
+   ```html
+   <body>
+   
+     ...
+   
+     <div th:insert="footer :: copy"></div>
+   
+     <div th:replace="footer :: copy"></div>
+   
+     <div th:include="footer :: copy"></div>
+     
+   </body>
+   ```
+   **显示结果：**
+   
+```html
+   
+   <body>
+     ...
+   
+     <div>
+       <footer>
+         &copy; 2011 The Good Thymes Virtual Grocery
+       </footer>
+     </div>
+   
+     <footer>
+       &copy; 2011 The Good Thymes Virtual Grocery
+     </footer>
+   
+     <div>
+       &copy; 2011 The Good Thymes Virtual Grocery
+     </div>
+     
+   </body>
+   ```
+   
+
+##### 小结
+
+- 最合理的做法是将页面公共部分（顶栏与侧边栏）抽取出来，单独成一个文件
+  - 优点是：充分解耦，设置跳转、高亮连接更方便、简化HTML
+
+##### 4.连接高亮
+
+> 参考官方文档：8.2可参数化的片段签名
+>
+> - 原理：通过修改<a classs= "nav-link">为<a classs= "nav-link active">高亮
+
+
 
 ## 附录
 

@@ -111,3 +111,26 @@ SpringBoot单元测试：[使用 Spring 进行单元测试](https://www.ibm.com/
 
 ## [分清 URI、URL 和 URN](https://www.ibm.com/developerworks/cn/xml/x-urlni.html)
 
+## Thyemleaf的配置文件
+
+在如下包文件下：
+
+```
+package org.springframework.boot.autoconfigure.thymeleaf;
+```
+
+快速打开方法是：
+
+- 通过.properties文件 `spring.thymeleaf.cache=false`配置前缀打开
+
+## [Spring 思维导图，让 Spring 不再难懂（ioc 篇）](https://juejin.im/entry/591d3b3b8d6d810058a9bb94)
+
+## [Spring思维导图，让spring不再难懂（一）](https://my.oschina.net/u/3080373/blog/891918)
+
+## [【积累】SpringBoot页面展示——Thymeleaf框架](https://www.jianshu.com/p/a842e5b5012e)
+
+#### 添加Thymeleaf依赖
+
+#### 数据显示
+
+- 显示普通文本
