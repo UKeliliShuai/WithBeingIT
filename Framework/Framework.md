@@ -9,10 +9,9 @@
 
 ![img](https://upload-images.jianshu.io/upload_images/788498-358a3764fcbca0e4.png?imageMogr2/auto-orient/strip|imageView2/2/format/webp)
 
+- [最详细的 Spring Boot 多模块开发与排坑指南](https://mp.weixin.qq.com/s/4ffDc99rzUEM3c4ZoTHsIA)
 - 磨刀不误砍柴功之：[Spring框架简介](https://www.jianshu.com/p/7b6a070119c7)
-
 - Spring:[Spring框架介绍及使用](https://blog.csdn.net/qq_22583741/article/details/79589910#2-%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8Bioc)（介绍了三种Bean的配置方式----一顿好找）
-
 - Maven:[Maven入门，读完这篇就够了](https://juejin.im/post/5a4a5e2bf265da4322418d7f)
 
 【源码分析——待理解】[Spring IOC 容器源码分析](https://juejin.im/post/5bc5c88df265da0b001f5dee#heading-12)
@@ -129,8 +128,29 @@ package org.springframework.boot.autoconfigure.thymeleaf;
 
 ## [【积累】SpringBoot页面展示——Thymeleaf框架](https://www.jianshu.com/p/a842e5b5012e)
 
-#### 添加Thymeleaf依赖
+**添加Thymeleaf依赖**
 
-#### 数据显示
+**数据显示**
 
 - 显示普通文本
+- 显示带有样式的普通文本
+- 显示对象
+
+**数据处理**
+
+**路径处理**
+
+**操作内置对象**
+
+**逻辑处理**
+
+**数据遍历**
+
+**页面引入**
+
+## [Spring中使用@Autowired注解静态实例对象的问题](https://blog.csdn.net/RogueFist/article/details/79575665)
+
+- 在Springframework里，我们是不能@Autowired一个静态变量，使之成为一个Spring bean的。为什么？其实很简单，因为当类加载器加载静态变量时，Spring上下文尚未加载。所以类加载器不会在bean中正确注入静态类，并且会失败。
+- JVM、类加载器机制等
+
+## [@RequestParam，@PathParam，@PathVariable等注解区别](https://blog.csdn.net/u011410529/article/details/66974974)

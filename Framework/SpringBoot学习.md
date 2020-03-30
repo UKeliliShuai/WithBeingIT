@@ -2082,8 +2082,8 @@ public class EmployeeController {
      </div>
      
    </body>
-   ```
-   
+```
+
 
 ##### 小结
 
@@ -2096,7 +2096,134 @@ public class EmployeeController {
 >
 > - 原理：通过修改<a classs= "nav-link">为<a classs= "nav-link active">高亮
 
+```html
+bar.html下，做判断：
 
+<a class="nav-link active" th:class="${activeUri=='main.html'?'nav-link active':'nav-link'}"
+```
+
+```html
+具体页面下，定义并赋值：
+
+<div th:replace="~{commons/bar::#sidebar(activeUri='main.html')}"></div>
+```
+
+
+
+##### 5.列表内容循环展示
+
+- th:each="emp:${emps}"
+
+- thymeleaf的Expression Utility Objects(表达式实体对象)，用于日期显示格式化
+
+  `<td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd')}"></td>`
+
+```html
+<table class="table table-striped table-sm">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>lastName</th>
+									<th>email</th>
+									<th>gender</th>
+									<th>departmentName</th>
+									<th>birth</th>
+									<th>Operation</th>
+								</tr>
+							</thead>
+							<!--属性参照public class Employee属性名取值-->
+							<tbody>
+								<tr th:each="emp:${emps}">
+									<td th:text="${emp.id}"></td>
+									<td th:text="${emp.lastName}"></td>
+									<td th:text="${emp.email}"></td>
+									<td th:text="${emp.gender}==0?'女':'男'"></td>
+									<td th:text="${emp.department.departmentName}"></td>
+									<td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd')}"></td>
+									<td>
+										<button class="btn btn-sm btn-primary">编辑</button>
+										<button class="btn btn-sm btn-danger">删除</button>
+									</td>
+								</tr>
+							</tbody>
+```
+
+##### 6.添加员工界面
+
+- 前端按钮：<a>本来就是GET方法
+
+```html
+<h2><a class="btn btn-sm btn-success" th:href="@{/emp}">添加员工</a></h2>
+```
+
+- 前端：制作添加页面表单
+
+```html
+<select name="department.id" class="form-control">
+<option th:value="${dept.id}" th:each="dept:${depts}" th:text="${dept.departmentName}">1</option>
+							</select>
+```
+
+- 后端：添加控制器方法
+
+```java
+/**
+     * 转到添加页面
+     */
+    @GetMapping("/emp")
+    public String addPage(Model model){
+        Collection<Department> departments = departmentDao.getDepartments();
+        model.addAttribute("depts",departments);
+        return "emps/add";
+    }
+```
+
+##### 7.添加员工（注意用户输入必定存在错误）
+
+- 添加控制器
+  - ` employeeDao.save(employee);`会保存在内存中
+  - `return "redirect:/emps";`又会刷新页面到员工列表页面
+
+```java
+/**
+     * 1.问题是：重定向默认是使用Get请求方式吗？
+     * 如何令重定向为POST？
+     *
+     * 2.知识点：SpringMVC自动将请求参数（html）和入参对象（employee）的属性一一绑定
+     *          要求请求参数名与javaBean入参的属性名一致
+     * @return 来到员工列表页面
+     */
+    @PostMapping("/emp")
+    public String addEmp(Employee employee){
+        System.out.println("保存的员工信息"+employee.toString());
+        employeeDao.save(employee);
+        return "redirect:/emps";
+    }
+```
+
+- 日期格式小插曲
+
+```html
+# springMVC日期格式
+spring.mvc.date-format=yyyy-MM-dd
+```
+
+
+
+##### 8.编辑员工页面
+
+- URL路径变量（批量路径）：@PathVariable
+  - [@RequestParam，@PathParam，@PathVariable等注解区别](https://blog.csdn.net/u011410529/article/details/66974974)
+
+##### 9.页面重用为编辑页面
+
+- 需要区分是员工修改还是员工添加（否则产生空指针异常）
+- <input>标签的hidden属性
+- 控制器的入参封装与传参Model
+
+##### 10.页面删除
+
+- 使用JS代码
 
 ## 附录
 

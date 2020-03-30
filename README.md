@@ -12,6 +12,10 @@
 
 [TOC]
 
+toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weixin.qq.com/s/3Ntfv89kLqy1M2PNiCN6bQ)
+
+看视频：[二进制、八进制、十进制、十六进制数相互转换](https://jingyan.baidu.com/article/47a29f24292608c0142399cb.html)
+
 ## 1.Java
 
 - [JAVAschool最全的JAVA技术教程](http://www.51gjie.com/)——笔者可以参考的开源目录结构
@@ -108,6 +112,7 @@
 
 ### SQL语言
 
+- [后端程序员必备：书写高质量SQL的30条建议](https://www.cnblogs.com/jay-huaxiao/p/12546973.html?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
 - 汇总:[SQL语句大全，所有的SQL都在这里](https://mp.weixin.qq.com/s/zI9vaf4zP_qLbCWYIz9yUg)
 
 ## 3.操作系统
@@ -241,3 +246,4 @@
 [Form表单、四种常见的POST请求提交数据方式](https://blog.csdn.net/bigtree_3721/article/details/82809459)
 
 [EL表达式 （详解）](https://blog.csdn.net/qwerasdf123/article/details/4189889)
+
