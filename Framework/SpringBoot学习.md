@@ -2225,6 +2225,57 @@ spring.mvc.date-format=yyyy-MM-dd
 
 - 使用JS代码
 
+#### 功能5：Web错误处理机制
+
+##### 1.错误处理原理
+
+- 自动配置文件ErrorMvcAutoConfiguration，给容器中添加了以下组件：
+
+​	1、DefaultErrorAttributes：在页面共享错误信息（最终错误结果）；
+
+​	2、BasicErrorController：处理默认/error请求（第二步）
+
+​	3、ErrorPageCustomizer：系统出现错误以后来到error文件夹下进行处理；（第一步）
+
+​	4、DefaultErrorViewResolver：模板引擎/静态资源文件夹下找errorViewName对应的页面（第三步）
+
+##### 2.定制错误时的页面
+
+1. **有模板引擎的情况下：访问“/error/状态码”;** 
+   - 【将错误页面命名为“错误状态码.html”放在模板引擎文件夹里面的 error文件夹下】，发生此状态码的错误就会来到对应的页面；
+   - 也可使用“4xx”和“5xx”作为错误页面的文件名来匹配这种类型的所有错误，精确优先（优先寻找精确的状态码.html）；
+   - 页面能获取的信息包括：
+
+​				timestamp：时间戳
+
+​				status：状态码
+
+​				error：错误提示
+
+​				exception：异常对象
+
+​				message：异常消息
+
+​				errors：JSR303数据校验的错误都在这里
+
+2. **没有模板引擎（模板引擎找不到这个错误页面）**，静态资源文件夹下找； 
+
+3. **以上都没有错误页面**，就是默认来到SpringBoot默认的错误提示页面；
+
+   ```java
+   在ErrorMvcAutoConfiguration类下的内部类：
+   
+    private static class StaticView implements View {
+   ```
+
+##### 3.定制错误时的Json数据
+
+- 适用于其他客户端访问场景（返回一串Json数据）
+
+
+
+
+
 ## 附录
 
 ### 1.重要快捷键

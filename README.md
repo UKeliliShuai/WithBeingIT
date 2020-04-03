@@ -133,6 +133,8 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 
 ### 框架
 
+- [Nginx 介绍](https://www.cnblogs.com/wushuaishuai/p/9366402.html#_label0)、[8分钟带你深入浅出搞懂Nginx](https://zhuanlan.zhihu.com/p/34943332)
+
 - [Spring框架概述](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Framework/Framework.md)
 - [SpringBoot学习](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Framework/SpringBoot学习.md)
 - [SpringBoot尚硅谷-笔记](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Framework/SpringBoot笔记_尚硅谷.md)
@@ -165,9 +167,11 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 6 Key Promoter X: 快捷键提示
 7 [.ignore](https://blog.csdn.net/qq_34590097/article/details/56284935): 生成git ignore文件
 
-#### 使用技巧
+#### 使用技巧/快捷键
 
 - [使用IntelliJ IDEA查看类的继承关系图形](https://www.cnblogs.com/deng-cc/p/6927447.html)
+- Ctrl+h查看继承树
+- 按下alt+enter：自动introduce local variable(引入局部变量)
 
 ### UML
 
@@ -182,6 +186,7 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 - [在 IntelliJ IDEA 中这样使用 Git，贼方便了！](https://mp.weixin.qq.com/s/3ll40XqNLwasJR1LYABvgw)
 - [GitHub 漫游指南](https://github.com/phodal/github)
 - 防坑血泪史：[GIT 查看/修改用户名和邮箱地址](https://blog.csdn.net/autoliuweijie/article/details/52230165)、[Changing author info](https://help.github.com/en/github/using-git/changing-author-info)
+- [github 项目搜索技巧-让你更高效精准地搜索项目](https://www.cnblogs.com/suwanbin/p/12113751.html#github-%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7)
 
 ### Excel
 
@@ -247,3 +252,12 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 
 [EL表达式 （详解）](https://blog.csdn.net/qwerasdf123/article/details/4189889)
 
+## 12.English
+
+### Grammar
+
+[及物动词 与 不及物动词](https://zhuanlan.zhihu.com/p/44253765)
+
+动词的分类：[英语语法第5期——动词的分类](https://zhuanlan.zhihu.com/p/38070458)
+
+- 用来表示动作或状态的词汇就是动词
