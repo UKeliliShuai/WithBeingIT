@@ -172,6 +172,7 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 - [使用IntelliJ IDEA查看类的继承关系图形](https://www.cnblogs.com/deng-cc/p/6927447.html)
 - Ctrl+h查看继承树
 - 按下alt+enter：自动introduce local variable(引入局部变量)
+- Ctrl+n查找所有类
 
 ### UML
 

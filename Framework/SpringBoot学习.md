@@ -1455,11 +1455,15 @@ public class WebMvcAutoConfiguration {
 
 模式：
 
-​	1）、SpringBoot在自动配置很多组件的时候，先看容器中有没有用户自己配置的（@Bean、@Component）如果有就用用户配置的，如果没有，才自动配置；如果有些组件可以有多个（ViewResolver）将用户配置的和自己默认的组合起来；
+​	1）、SpringBoot在自动配置很多组件的时候，**先看容器中有没有用户自己配置的（@Bean、@Component）如果有就用用户配置的，如果没有，才自动配置；**如果**有些组件可以有多个（ViewResolver）将用户配置的和自己默认的组合起来**；
 
 ​	2）、在SpringBoot中会有非常多的xxxConfigurer帮助我们进行扩展配置
 
 ​	3）、在SpringBoot中会有很多的xxxCustomizer帮助我们进行定制配置
+
+理解：
+
+- @Configuration：有自动导入就有属于自动导出，需要配合该类中方法的@bean，这就相当于一个xml配置:
 
 ### 6、CRUD实验
 
@@ -2090,7 +2094,7 @@ public class EmployeeController {
 - 最合理的做法是将页面公共部分（顶栏与侧边栏）抽取出来，单独成一个文件
   - 优点是：充分解耦，设置跳转、高亮连接更方便、简化HTML
 
-##### 4.连接高亮
+#### 功能5：连接高亮
 
 > 参考官方文档：8.2可参数化的片段签名
 >
@@ -2110,7 +2114,7 @@ bar.html下，做判断：
 
 
 
-##### 5.列表内容循环展示
+#### 功能6：列表内容循环展示
 
 - th:each="emp:${emps}"
 
@@ -2148,7 +2152,7 @@ bar.html下，做判断：
 							</tbody>
 ```
 
-##### 6.添加员工界面
+#### 功能7：添加员工界面
 
 - 前端按钮：<a>本来就是GET方法
 
@@ -2210,7 +2214,7 @@ spring.mvc.date-format=yyyy-MM-dd
 
 
 
-##### 8.编辑员工页面
+#### 功能8：编辑员工页面
 
 - URL路径变量（批量路径）：@PathVariable
   - [@RequestParam，@PathParam，@PathVariable等注解区别](https://blog.csdn.net/u011410529/article/details/66974974)
@@ -2225,7 +2229,7 @@ spring.mvc.date-format=yyyy-MM-dd
 
 - 使用JS代码
 
-#### 功能5：Web错误处理机制
+### 7、Web错误处理机制
 
 ##### 1.错误处理原理
 
@@ -2272,9 +2276,100 @@ spring.mvc.date-format=yyyy-MM-dd
 
 - 适用于其他客户端访问场景（返回一串Json数据）
 
+### 8、嵌入式Servlet容器配置
 
+#### 1.概述
 
+- 非SpringBoot项目：(1)将应用打成war包（2）在服务器启动Tomcat（3）war包放在Tomcat中运行
+- 嵌入式Servlet容器优点：简单、便捷
+- 嵌入式Servlet容器缺点：默认不支持JSP、优化定制较为复杂
 
+#### 2.如何定制和修改Servlet容器的相关配置
+
+- 在application.properties中修改与server有关的配置（类名：ServerProperties）
+
+  ```properties
+  #举例：
+  server.port =8081
+  server.context-path = /crud
+  ```
+
+  > 配置模式
+  >
+  > 1. 通用的Servlet容器设置
+  >
+  >    `server.xxx`
+  >
+  > 2. 特殊的Tomcat容器（Servlet容器的一种）设置
+  >
+  >    `server.tomcat.xxx`
+
+- **编写一个**WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer**类**
+
+  ```java
+      /**
+       * 编写一个嵌入式servlet容器定制器
+       */
+      public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer(){
+          return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
+              @Override
+              public void customize(ConfigurableWebServerFactory factory) {
+                  factory.setPort(8081);
+              }
+          };
+      }
+  ```
+
+#### 3.注册Servlet三大组件【Servlet、Filter、Listener】
+
+> P46
+
+#### 4.Springboot能否切换其他Servelet容器
+
+> p47
+
+- jetty(适用于长连接，例如：聊天室)
+- undertow（不支持JSP）
+
+##### **4.1 嵌入式Servlet自动配置原理**
+
+> P48:嵌入式Servlet自动配置原理
+>
+> - ```java
+>   ServletWebServerFactoryConfiguration
+>   ```
+> ```
+> 
+> ```
+
+1. 问题1：嵌入式的Servlet容器自动配置？
+2. 问题2：核心类的注解职责分别是什么？
+   - 嵌入式Servlet容器工厂
+   - 嵌入式的Servlet容器
+
+3. 问题3：用户（程序员）对嵌入式容器的配置修改是怎么生效？
+   - 容器中导入了**EmbeddedServletContainerCustomizerBeanPostProcessor**
+
+##### **4.2 嵌入式Servlet容器启动原理**
+
+1. 何时创建嵌入式Servlet容器工厂
+2. 何时获取嵌入式Servlet容器
+3. 何时启动嵌入式Servlet容器
+
+### 9、使用外置的Servlet容器
+
+#### 1.概述
+
+- 嵌入式Servlet容器优点：简单、便捷
+- 嵌入式Servlet容器缺点：默认不支持JSP、优化定制较为复杂
+  - 使用定制器：ServerProperties、自定义定制器Customizer
+  - 自己编写Servlet容器工厂
+
+- 解决方案：外置Servlet容器
+  - 外部安装Tomcat
+  - 将应用打成**War包**（而不是**可执行jar包**）
+
+#### 2.
 
 ## 附录
 

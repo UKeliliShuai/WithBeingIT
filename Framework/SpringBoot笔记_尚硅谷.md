@@ -3008,7 +3008,7 @@ ServerProperties也是定制器
 
 
 
-###5）、嵌入式Servlet容器启动原理；
+### 5）、嵌入式Servlet容器启动原理；
 
 什么时候创建嵌入式的Servlet容器工厂？什么时候获取嵌入式的Servlet容器并启动Tomcat；
 

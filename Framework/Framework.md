@@ -6,6 +6,14 @@
 >
 > - 平时看程序结构太注重程序=右边的结构
 > - 而忽略了=左边才是类的骨架（算数的结构）
+>
+> **模式：**
+>
+> ​	1）、SpringBoot在自动配置很多组件的时候，**先看容器中有没有用户自己配置的（@Bean、@Component）如果有就用用户配置的，如果没有，才自动配置；**如果**有些组件可以有多个（ViewResolver）将用户配置的和自己默认的组合起来**；
+>
+> ​	2）、在SpringBoot中会有非常多的xxxConfigurer帮助我们进行扩展配置
+>
+> ​	3）、在SpringBoot中会有很多的xxxCustomizer帮助我们进行定制配置
 
 ![img](https://upload-images.jianshu.io/upload_images/788498-358a3764fcbca0e4.png?imageMogr2/auto-orient/strip|imageView2/2/format/webp)
 
