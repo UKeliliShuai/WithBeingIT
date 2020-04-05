@@ -2341,6 +2341,10 @@ spring.mvc.date-format=yyyy-MM-dd
 > ```
 > 
 > ```
+>
+> ```
+> 
+> ```
 
 1. 问题1：嵌入式的Servlet容器自动配置？
 2. 问题2：核心类的注解职责分别是什么？
@@ -2369,11 +2373,121 @@ spring.mvc.date-format=yyyy-MM-dd
   - 外部安装Tomcat
   - 将应用打成**War包**（而不是**可执行jar包**）
 
-#### 2.
+#### 2.步骤与原理
+
+## 五、Docker
+
+![1586069437318](../_static/1586069437318.png)
+
+### 1.基本概念
+
+- 是什么？
+  - [Docker](https://www.docker.com/) 是一个开源的应用容器引擎，基于Go 语言并遵从Apache2.0协议开源。
+
+- 有什么用？
+  - Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的Linux 机器上，也可以实现虚拟化。
+
+- 优势？
+  - 容器是完全使用沙箱机制，相互之间不会有任何接口,更重要的是容器性能开销极低。
+
+**通俗理解：**
+
+> Docker支持将软件编译成一个镜像；
+>
+> 在镜像中为各种软件做好配置，并将镜像发布出去；
+>
+> 其他使用者可以直接使用这个镜像。
+>
+> 运行中的这个镜像称为容器，容器启动是非常快速的。
+>
+> Docker类似windows里面的ghost操作系统，安装好后什么都有了；
+
+### 2.核心概念
+
+![1586069967436](../_static/1586069967436.png)
+
+**docker主机(Host)：**安装了Docker程序的机器（Docker直接安装在操作系统之上（无论window、linux或其他））；
+
+- 运行（**daemon**）：守护进程；后台程序
+- docker镜像（image X）：软件打包好的镜像；放在docker仓库中
+- docker容器（container）：运行镜像后的实例称为容器。
+
+**docker客户端(Client)：**连接docker主机进行操作（客户端通过命令行或者其他工具使用Docker，类似通过MySQL可视化客户端/命令行操作MySQL数据库）
+
+**docker注册中心(Registries)**：用来保存各种打包好的软件镜像；
+
+- Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。
+- 公共仓库（Docker Hub）：Docker Hub(https://hub.docker.com) 提供了庞大的镜像集合供使用。
+- 私有参股（private registry）
+
+### 3.运行Docker步骤：
+
+1）、安装Docker
+
+2）、去Docker仓库找到这个软件对应的镜像；
+
+3）、使用Docker运行这个镜像，这个镜像就会生成一个Docker容器；
+
+4）、对容器的启动停止就是对软件的启动停止；
+
+### 4.Linux初次安装Docker
+
+#### 4.1运行Linux系统——CentOS内核
+
+##### 方式一：
+
+1）虚拟机二选一：VMWare、**VirtualBox（安装体量小）**；
+
+2）安装Linux内核：centos7-atguigu.ova；
+
+3）双击启动linux虚拟机;使用  root/ 123456登陆
+
+4）使用客户端连接linux服务器进行命令操作；
+
+5）设置虚拟机网络；
+
+- 桥接网络===选好网卡====接入网线；
+
+6）设置好网络以后使用命令重启虚拟机的网络：`service network restart`
+
+##### 方式二：
+
+1）购买云服务器
+
+- 学生服务器：**百度、**腾讯、阿里
+- centOS X86_64bit
+
+2）登录方式（参考官方文档）
+
+- [云服务器 BCC](https://cloud.baidu.com/doc/BCC/index.html)
+
+1. [登录实例](https://cloud.baidu.com/doc/BCC/s/Bjwvynmdz)
+2. putty使用SSH密钥登录Linux实例
+3. ssh （安全外壳协议）：SSH 是较可靠，专为远程登录会话和其他网络服务提供安全性的协议。 
+
+#### 4.2基本命令
+
+1. 检查CentOS内核版本(必须是3.10及以上):`uname -r`
+2. 安装docker:`yum install docke`
+3. 启动docker:`systemctl start docker`
+4. 检查docker版本：docker -v
+5. 设置开机启动docker：`systemctl enable docker`
+6. 停止docker:systemctl stop docker
+
+### 5.docker常用命令
+
+| 操作 | 命令                                            | 说明                                                    |
+| ---- | ----------------------------------------------- | ------------------------------------------------------- |
+| 检索 | docker  search 关键字  eg：docker  search redis | docker  hub上检索镜像的详细信息，如镜像的TAG。          |
+| 拉取 | docker pull 镜像名:tag                          | :tag是可选的，tag表示标签，多为软件的版本，默认是latest |
+| 列表 | docker images                                   | 查看所有本地镜像                                        |
+| 删除 | docker rmi image-id                             | 删除指定的本地镜像                                      |
 
 ## 附录
 
 ### 1.重要快捷键
 
-- 按照名称查找类快捷键：ctrl+shift+n
+- 按照名称查找类快捷键：ctrl+shift+n/ctrl+n
 - 在类中按方法名称查找：ctrl+F12--->直接输入方法名
+- 查看集成关系ctrl+h
+- 调试源码，查看frames（先执行的在下，后执行的在上）
