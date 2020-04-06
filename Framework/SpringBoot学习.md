@@ -2345,6 +2345,14 @@ spring.mvc.date-format=yyyy-MM-dd
 > ```
 > 
 > ```
+>
+> ```
+> 
+> ```
+>
+> ```
+> 
+> ```
 
 1. 问题1：嵌入式的Servlet容器自动配置？
 2. 问题2：核心类的注解职责分别是什么？
@@ -2380,6 +2388,8 @@ spring.mvc.date-format=yyyy-MM-dd
 ![1586069437318](../_static/1586069437318.png)
 
 ### 1.基本概念
+
+**[从 0 开始了解 Docker](https://juejin.im/post/5ad3172c5188257ddb10109a)**
 
 - 是什么？
   - [Docker](https://www.docker.com/) 是一个开源的应用容器引擎，基于Go 语言并遵从Apache2.0协议开源。
@@ -2476,12 +2486,130 @@ spring.mvc.date-format=yyyy-MM-dd
 
 ### 5.docker常用命令
 
-| 操作 | 命令                                            | 说明                                                    |
-| ---- | ----------------------------------------------- | ------------------------------------------------------- |
-| 检索 | docker  search 关键字  eg：docker  search redis | docker  hub上检索镜像的详细信息，如镜像的TAG。          |
-| 拉取 | docker pull 镜像名:tag                          | :tag是可选的，tag表示标签，多为软件的版本，默认是latest |
-| 列表 | docker images                                   | 查看所有本地镜像                                        |
-| 删除 | docker rmi image-id                             | 删除指定的本地镜像                                      |
+#### 1）、镜像操作
+
+[镜像加速器教程](https://yeasy.gitbooks.io/docker_practice/install/mirror.html)
+
+**[从 0 开始了解 Docker](https://juejin.im/post/5ad3172c5188257ddb10109a)**
+
+- 网易云加速器 https://hub-mirror.c.163.com
+- 阿里云加速器(需登录账号获取)
+
+以 **网易云** 镜像服务 https://hub-mirror.c.163.com 为例进行介绍：
+
+1. linux编辑`/etc/docker/daemon.json`路径下的文件：`vi /etc/docker/daemon.json`
+2. linux保存并退出：`:wq`
+3. 一定要重新启动docker
+4. 下载需要的images
+
+| 命令                                            | 操作 | 说明                                                        |
+| ----------------------------------------------- | ---- | ----------------------------------------------------------- |
+| docker  search 关键字  eg：docker  search redis | 检索 | docker  hub上检索镜像的详细信息，如镜像的TAG。              |
+| docker pull 镜像名:tag                          | 拉取 | **:tag是可选的，tag表示标签，多为软件的版本，默认是latest** |
+| docker images                                   | 列表 | 查看所有本地镜像                                            |
+| docker rmi image-id                             | 删除 | 删除指定的本地镜像                                          |
+
+https://hub.docker.com/
+
+#### 2）、容器操作
+
+- 下载的软件镜像（类比为：QQ已经安装的程序）
+- 运行镜像：产生一个容器（类比为：正在运行的软件，运行的QQ）；
+
+##### 详细步骤：
+
+![1586108040522](../_static/1586108040522.png)
+
+1. 根据镜像启动容器
+
+   `docker run --name myTomcat -d tomcat`
+
+2. 查看运行中的容器
+
+   `docker ps`
+
+3. 查看所有运行
+
+   `docker ps -a`
+
+4. 端口映射【非常重要】
+
+   ` docker run --name myTomcat1 -d -p 8888:8080 tomcat`
+
+   8888是主机端口，8080 是docker的tomcat容器内部的端口
+
+5. 查看防火墙状态
+
+   `service firewalld status`
+
+更多命令参看
+https://docs.docker.com/engine/reference/commandline/docker/
+
+### 6.后续课程所需环境搭建
+
+#### 6.1 安装mysql
+
+1. 安装
+
+   ```shell
+   docker pull mysql
+   ```
+
+2. 错误的启动（未输入密码）
+
+   ```shell
+   # docker run --name mysql01 -d mysql
+   查看对应的logs
+   ```
+
+   查看日志
+
+   ```shell
+   # docker logs 42f09819908b
+   
+   error: database is uninitialized and password option is not specified 
+     You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD；
+     
+     这个三个参数必须指定一个
+   ```
+
+3. 参考[docker-MySQL官方文档](https://hub.docker.com/_/mysql)
+
+   ```shell
+   Starting a MySQL instance is simple:
+   
+   $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+   ```
+
+4. 正确的启动方式
+
+   ```shell
+   docker run -p 3306:3306 --name mysql01 -e MYSQL_ROOT_PASSWORD=wangshuai -d mysql
+   
+   [root@instance-oa1zb4zu ~]# docker ps
+   CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+   cd480a1c25d2        mysql               "docker-entrypoint..."   52 seconds ago      Up 51 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp   mysql01
+   ```
+
+   
+
+#### 6.2安装redis
+
+#### 6.3安装rabbitmq
+
+#### 6.4安装elasticsearch
+
+#### 6.5结果
+
+```shell
+[root@instance-oa1zb4zu ~]# docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+docker.io/rabbitmq        latest              ce51f7cc8a59        4 days ago          154 MB
+docker.io/tomcat          latest              e36064f7c6f0        5 days ago          528 MB
+docker.io/redis           latest              4cdbec704e47        6 days ago          98.2 MB
+docker.io/mysql           latest              9228ee8bac7a        6 days ago          547 MB
+docker.io/elasticsearch   latest              5acf0e8da90b        18 months ago       486 MB
+```
 
 ## 附录
 

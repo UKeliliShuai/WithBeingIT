@@ -262,3 +262,13 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 动词的分类：[英语语法第5期——动词的分类](https://zhuanlan.zhihu.com/p/38070458)
 
 - 用来表示动作或状态的词汇就是动词
+
+## 13.WebGIS
+
+- 带情怀，先收藏：[WebGIS开发者入门](https://blog.csdn.net/GISuuser/article/details/81938628)
+
+- ArcMap→Arcgis Engine→Arcgis server→Arcgis API for Js；AE二次开发还是Webgis
+
+## 14.Linux 
+
+[Linux教程](https://www.runoob.com/linux/linux-system-contents.html)
