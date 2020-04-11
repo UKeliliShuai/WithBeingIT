@@ -1,5 +1,3 @@
-
-
 # SpringBoot学习
 
 [TOC]
@@ -2357,6 +2355,10 @@ spring.mvc.date-format=yyyy-MM-dd
 > ```
 > 
 > ```
+>
+> ```
+> 
+> ```
 
 1. 问题1：嵌入式的Servlet容器自动配置？
 2. 问题2：核心类的注解职责分别是什么？
@@ -3314,7 +3316,22 @@ private void callRunners(ApplicationContext context, ApplicationArguments args) 
 
 ### 5.总结
 
-#### 干预SpringBoot启动过程
+#### 5.1 回顾整体流程，
+
+1. Springboot的启动，主要创建了配置环境(environment)、事件监听(listeners)、应用上下文(applicationContext)
+
+2. 并基于以上条件，在容器中开始实例化我们需要的Bean，至此，通过SpringBoot启动的程序已经构造完成，接下来我们来探讨自动化配置是如何实现。
+
+#### 5.2 SpringBoot自动化配置原理
+
+- 从下图可以看出**启动自动配置注解（@EnableAutoConfiguration）**是在SpringBoot自动配置模块中生效的
+- @EnableConfigurationProperties(XxxxProperties.class)注解在XxxAutoConfiguration（某某自动配置）类上，表示可与其绑定的属性是XxxxProperties.class
+
+![img](../_static/6912735-95d1af756cee57ad-1586572831443.webp)
+
+![img](../_static/6912735-8f2374a500b07c6d.png)
+
+#### 5.3 干预SpringBoot启动过程的方法
 
 1. 定义四种监听器
 
@@ -3337,6 +3354,20 @@ private void callRunners(ApplicationContext context, ApplicationArguments args) 
 3. 为IOC容器源的添加@Component，使生效
 
    在对应类名上添加注解
+
+#### 5.4最初的Maven依赖
+
+1. maven项目管理工具可以帮我们添加各种类库的依赖（下载各种jar包）
+
+2. 只要在maven的项目中加入了Xxxxxxx(以mybatis为例)所需要的若干依赖，就可以触发自动配置，但引入mybatis原生依赖的话，每集成一个功能都要去修改其自动化配置类，那就得不到开箱即用的效果了!?
+
+   ![img](../_static/6912735-b616bb63af52b5dd-1586574009731.webp)
+
+3. 所以Spring-boot为我们提供了统一的starter可以直接配置好相关的类，触发自动配置所需的依赖(以mybatis为例)如下：
+
+   ![img](../_static/6912735-eeed64900a5e35c5.webp)
+
+4. 因为maven依赖的传递性，我们只要依赖starter就可以依赖到所有需要自动配置的类，实现开箱即用的功能。也体现出Springboot简化了Spring框架带来的大量XML配置以及复杂的依赖管理，让开发人员可以更加关注业务逻辑的开发。
 
 ## 附录
 
