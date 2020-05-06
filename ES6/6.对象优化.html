@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1）key-values取值；2)对象属性拼接assign()；3）声明对象简写;4)对象的函数属性简写;5)对象的扩展运算符-->
+    <script>//1）key-values取值
+        const person = {
+            name:"小汪",
+            age:18,
+            language:["java","python","js"]
+        }
+        console.log(Object.keys(person));
+        console.log(Object.values(person));
+        console.log(Object.entries(person));//返回Key+values
+    </script>
+
+    <script>//2)对象属性拼接assign()
+    // 注意对象中是使用key：values的格式，而不是key = values
+    // 同名属性会存在覆盖问题：后面参数的属性覆盖前面
+        const target = {t1:1,t2 : 2};
+        const source1 = {s1:3,s2:3}; 
+        const source2 = {s3: 4,s4:5}; 
+        Object.assign(target,source1,source2);//赋值、拷贝
+        console.log(target);
+    </script>
+
+    <script>//3）声明对象简写——简洁
+        const name = "小汪";
+        const age = "18";
+        
+        // 原来对象的声明
+        let person1 = {name:name,age:age};
+        console.log(person1);
+        // ES6对象的声明
+        let person2 = {name,age};
+        console.log(person2);
+    </script>
+
+    <script>//4)对象的函数属性简写——主要是eat2/eat3
+        const person3 = {
+            name:"小汪在吃",
+            eat1: function(fruits){
+                return this.name+fruits;
+            },
+            eat2:fruits=>person3.name+fruits,
+            eat3(fruits){
+                return this.name +fruits;
+            }
+        }
+        console.log(person3.eat1("苹果"));
+        console.log(person3.eat2("香蕉"));
+        console.log(person3.eat3("梨子"));
+    </script>
+
+    <script>//5)对象的扩展运算符:  ...
+    // [es6之扩展运算符 三个点（...）](https://blog.csdn.net/astonishqft/article/details/82899965)
+    // 对象中的扩展运算符(...)用于取出参数对象中的所有可遍历属性，拷贝到当前对象之中
+    // 对象&&数组都可以
+        //1.对象复制
+        const person4 = {
+            name:"小汪",
+            age:18,
+            language:["java","python","js"]
+        }
+        let targetPerson = { ...person4 };
+        console.log(targetPerson);
+        // 2.对象合并
+        const name1 = {name:"小汪"};
+        const age1 = {name:"小wang",age:"18"};
+        let person5 = { ...name1,...age1 };//将name1和age1全都拆散合并,同名属性同样存在覆盖现象
+        console.log(person5);
+    </script>
+</body>
+</html>

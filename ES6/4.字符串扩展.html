@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 字符串相关操作 -->
+    <!-- 1)扩展函数；2）字符串模板；3）字符串插入值或表达式-->
+    <script>//1)扩展函数
+        let str = "wangshuai.vue";
+        console.log(str.startsWith("wang"));//true
+        console.log(str.endsWith(".vue"));//true
+        console.log(str.includes("s"));//true
+        console.log(str.includes("gshuai"));//true
+    </script>
+
+    <script>//2）字符串模板
+        // 使用``符号
+        // 亲测<script>标签不能放在` `中
+        let ss = `<div>
+                     aaa
+                 </div>`;
+        console.log(ss);
+        name = "wangshuai";
+        age = 24;
+    </script>
+
+    <script>//3）字符串插入值、表达式、函数
+        function say(){
+            return "少年";
+        }
+        let info = `我是${name},年龄${age-6},目前是${say()}`;
+        console.log(info);
+    </script>
+
+</body>
+</html>

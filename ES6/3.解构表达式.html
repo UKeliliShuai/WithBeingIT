@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1）数组解构；2）对象解构 -->
+    <script>//1）数组解构
+        // 原数组赋值方法
+        let arr = [1,2,3];
+        a = arr[0];
+        b = arr[1];
+        c = arr[2];
+        console.log(a,b,c);
+        // 解构表达式
+        let [m,n,o] = arr;
+        console.log(m,n,o);
+        const [x,y,z] = arr;
+        console.log(x,y,z);
+    </script>
+    <script>//2）对象解构
+    // 注意对象解构的变量应该与对象属性名一致
+    // 或  键值对形式赋值，例如“属性:新变量”
+        const person = {
+            name:"小汪",
+            age:18,
+            language:["java","python","js"]
+        }
+
+        const {name,age,language} = person;
+        console.log(name,age,language);
+
+        // const {name1,age1,language1} = person;
+        // console.log(name1,age1,language1);//undefined undefined undefined
+        
+        const {name:name1,age:age1,language:language1} = person;
+        console.log(name1,age1,language1);//undefined undefined undefined
+        
+    </script>
+</body>
+</html>

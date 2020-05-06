@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 初始化Vue：npm init -y -->
+    <!-- 安装Vue包：npm install vue -->
+    <!-- 引入Vue: -->
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+    <div id="test">
+        <button v-on:click="level++">成就升级</button>
+        <input type="text" v-model="level">
+        <h5>{{name}}非常努力，达到了{{level}}级成就</h5>
+    </div>
+    <!-- 1）创建vm桥梁 -->
+    <!-- 2）Vue双向绑定VM: v-model-->
+    <!-- 3) v-指令  绑定事件：v-on -->
+    <script>
+        let vm = new Vue({
+            el:"#test", //element
+            data: {
+                name:"小汪",
+                level:1
+            },
+            methods:{//封装方法
+
+            }
+        })
+    </script>
+</body>
+</html>

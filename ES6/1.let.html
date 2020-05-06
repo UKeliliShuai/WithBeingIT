@@ -1,0 +1,45 @@
+<!-- 英文模式下“shift+!”快速生成html页面模板，如下 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- let新特性 -->
+    <!-- 1）作用域；2）声明唯一 3)变量提升-->
+    <!-- var松散，let严格唯一 -->
+    <script>//1）作用域
+        // var声明的变量作用域不明确
+        // let声明的变量有严格作用域
+        {
+            var a = 1;
+            let b = 2;
+        }
+        console.log(a);// 1
+        console.log(b);// let.html:21 Uncaught ReferenceError: b is not defined at let.html:21
+    </script>
+
+    <script>//2）变量声明
+        // var可多次声明同一变量
+        // let只能声明一次
+        var m = 1;
+        var m = 2;
+        let n = 3;
+        // let n = 4;
+        console.log(m);//2
+        console.log(n);//3
+    </script>
+
+    <script>//3)变量提升
+        // var声明的变量会提升
+        // let声明的变量不会提升，会报错
+        console.log(x);//undefined
+        var x = 1;
+        console.log(y);//Uncaught ReferenceError: Cannot access 'y' before initialization at let.html:40
+        let y = 2;
+    </script>
+</body>
+</html>

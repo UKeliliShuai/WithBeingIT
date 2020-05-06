@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=</script>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 函数优化 -->
+    <!-- 1）函数参数默认值；2）不定参数；3）箭头函数；4）箭头函数结合解构表达式 -->
+    <Script>//1）函数参数默认值
+        // 函数默认值的变通写法
+        function oldFuncPara(a,b){
+            b = b || 1;
+            return a+b;
+        }
+        console.log(oldFuncPara(10));
+        console.log(newFuncPara(10,20));
+        // 函数参数默认值新特性
+        function newFuncPara(a,b=2){
+            return a+b;
+        }
+        console.log(newFuncPara(20));
+        console.log(newFuncPara(20,20));
+    </Script>
+    <script>//2）不定参数
+        // 函数参数可以传任意多个参数
+        function valitiPara(...values){
+            console.log(values.length);
+        }
+        valitiPara(1,2,3);//3
+        valitiPara(1);//1
+    </script>
+    <script>//3）箭头函数
+        //1. 无需定义方法名，需要保留的只是参数和方法体
+        // 格式：参数=>方法体
+        let fun1 = function oldFuncDefine(Obj){
+            console.log(Obj);
+        }
+        let fun2 = Obj => console.log(Obj);
+        fun2("wangshuai")
+
+        //2.多个参数形式&&带返回值return的形式
+        let sum1 = function oldSum(a,b){
+            return a+b;
+        }
+        let sum2 = (a,b)=> a+b;
+
+
+        //3. 多个参数&&方法体多行的形式
+        let sum3 = (a,b)=> {c = 5; return a+b+c;};
+        console.log(sum2(1,4));
+        console.log(sum3(1,4));
+        // console.log(`${sum3`);这样报错
+
+
+
+        //4）箭头函数结合解构表达式 
+        //4. 解构&&箭头函数
+        const person = {
+            name:"小汪",
+            age:18,
+            language:["java","python","js"]
+        }
+        let print = ({name})=>{console.log("hello"+name)};//{name}对即将传入的对象解构，方法体直接使用name属性
+        print(person);
+    </script>
+</body>
+</html>

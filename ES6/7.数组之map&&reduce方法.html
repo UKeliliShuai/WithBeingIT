@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // map():接收一个函数，将原数组中的所有元素用这个函数处理后放入新数组返回
+        let arr = ['3','20','4','6'];
+        console.log( arr.map(item=>item*2) );
+        // 字符串乘以数字，结果为数字item*2
+        //结尾是：[6, 40, 8, 12]
+
+
+        // reduce():为数组中每一个元素依次执行回调函数
+        // 从索引1（第二个元素）开始
+        // previousValue是函数返回值
+        // curruntValue是数组中取出的值
+        /** 参数按顺序依次为：
+        * 1.previousValue
+        * 2.curruntValue
+        * 3.index
+        * 4.array
+        */
+        arr.reduce((a,b,c)=>{
+            console.log("previousValue:"+a);
+            console.log("curruntValue:"+b);
+            console.log("index:"+c);
+            return a*1+b*1;// 字符串乘以数字，结果为数字item*1
+        })
+    </script>
+</body>
+</html>
