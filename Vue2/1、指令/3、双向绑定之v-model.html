@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Value是输入的值；java<br/>是显示在页面的值 -->
+        <h5>掌握的编程语言</h5>
+        <input type="checkbox" v-model="languege" value="Java">java<br/>
+        <input type="checkbox" v-model="languege" value="C++">c++<br/>
+        <input type="checkbox" v-model="languege" value="Python">python<br/>
+        <p>选中了{{languege.join(",")}}</p>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:app,
+            data:{
+                languege:[]//此处声明未空数组
+            }
+        });
+    </script>
+</body>
+</html>

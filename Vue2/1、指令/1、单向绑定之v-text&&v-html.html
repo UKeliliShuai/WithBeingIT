@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入Vue: -->
+    <!-- 注意此时是上级目录用../ -->
+    <!-- 注意当前目录用./ -->
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<!-- 1）插值表达式 
+    - 可以直接获取Vue实例中定义的数据或函数
+    - 插值表达式只能写在标签体中
+    - 支持JS语法，可以调用js内置函数(但必须有返回值)
+    - 表达式必须有返回结果。例如有返回结果1+1，无返回结果let a= 1+1
+-->
+<!-- 2）插值闪烁 
+    - chrome浏览器的network调整为slow 3G
+-->
+<body>
+    <div id="app">
+        <!-- {{msg}}存在插值闪烁 -->
+        {{msg}}
+        <br/>
+        <!-- 下述两个不存在插值闪烁 -->
+        <span v-html="msg"></span>
+        <br/>
+        <span v-text="msg"></span>
+    </div>
+
+
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                msg:"<h1>HelloWorld</h1>"
+            }
+        });
+    </script>
+</body>
+</html>

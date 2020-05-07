@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<!-- 模板内的表达式非常便利，但是设计它们的初衷是用于简单运算的。在模板中放入太多的逻辑会让模板过重且难以维护。 -->
+<!-- 所以，对于任何复杂逻辑，你都应当使用计算属性。 -->
+
+<body>
+    <div id="app">
+        <p>Original message: "{{ message }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+        <button v-on:click="a++">{{a}}</button>
+        <button v-on:click="b++">{{b}}</button>
+        <p>总价：{{c}}</p>
+    </div>
+    <script>
+        // 除了简约风格要求使用计算属性
+        // 而且计算属性会因所有依赖的变化而更新
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                message: 'Hello112121',
+                a: 1,
+                b: 1,
+            },
+            computed: {
+                // 计算属性的 getter
+                reversedMessage() {
+                    // `this` 指向 vm 实例
+                    return this.message.split('').reverse().join('')
+                },
+                now: function () {
+                    return Date.now()
+                },
+                c() {
+                    return this.a + this.b;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

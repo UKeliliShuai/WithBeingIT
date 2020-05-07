@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<!-- 1）背景：插值表达式只能写在标签体内
+    - v-bind用于:动态地绑定一个或多个 attribute，或一个组件 prop 到表达式。
+    - https://cn.vuejs.org/v2/api/#v-bind
+    - 在绑定 class 或 style attribute 时，支持其它类型的值，如数组或对象。
+-->
+<body>
+    <div id="app">
+        <a v-bind:href="link">链接地址</a>
+        <br/>
+        <a :href="link">链接地址——缩写</a>x 
+        <br/>
+        <!-- 对class和style两个属性做了增强：在绑定 class 或 style attribute 时，支持其它类型的值，如数组或对象。 -->
+        <span v-bind:class="{active:isActive,'text-danger1111':isDanger}">v-bind:class</span>
+        <!-- <span class="active text-danger1111">v-bind:class</span> -->
+        <br/>
+
+
+        <span :style = "{color:c,'font-size':s}">v-bind:style</span>
+        <!-- <span style="color: red; font-size: 30px;">v-bind:style</span> -->
+    </div>
+
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                link:"http://www.baidu.com",
+                isActive:true,
+                isDanger:true,//class设置true/false
+                c:"red",
+                s:"30px"
+
+            }
+        })
+    </script>
+</body>
+</html>

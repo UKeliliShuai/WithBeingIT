@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<!-- 条件渲染 -->
+<!-- v-show
+预期：any
+
+用法：
+
+根据表达式之真假值，切换元素的 display CSS property。
+
+当条件变化时该指令触发过渡效果。
+
+参考：条件渲染 - v-show -->
+
+
+
+<body>
+    <div id="app">
+        <input v-model="message" placeholder="edit me">
+        <p>Message is: {{ message }}</p>
+        <input type="button" v-on:click="shiftFun">切换登录方式
+        <br />
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+        </template>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                loginType: "username",
+                message:[]
+            },
+            methods: {
+                shiftFun() {
+                    tmp = 1;
+                    if (tmp) {
+                        this.loginType = "email";
+                        tmp = 0;
+                    } else {
+                        this.loginType = "username";
+                        tmp = 1;
+                    }
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

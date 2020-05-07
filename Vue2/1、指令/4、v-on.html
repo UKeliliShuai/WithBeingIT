@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<!-- [v-on](https://cn.vuejs.org/v2/api/#v-on) 
+    - 绑定事件监听器。事件类型由参数指定。表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略。
+    - 事件修饰符
+    - 键修饰符:<input @keyup.enter="onEnter">
+-->
+<body>
+    <div id="app">
+        <button  @click="num++">点赞</button>
+        <button v-on:click="delete1">取消点赞</button>
+        <p>点赞了{{num}}次</p>
+        <div @click = "hello">
+            <p>外部div</p>
+            <div  @click.stop = "hello"><p>内部div</p></div>
+        </div>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                num:1
+            },
+            methods: {
+                delete1(){//es6函数写法
+                    this.num--;
+                },
+                hello:function(){
+                    alert("已点击")
+                }
+            },
+        })
+    </script>
+</body>
+</html>
