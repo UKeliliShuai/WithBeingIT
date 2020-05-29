@@ -78,6 +78,8 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 
 ##### 基本概念
 
+- [5 分钟理解什么是响应式编程 Reactive Programming](https://cloud.tencent.com/developer/news/327778)
+
 - [10分钟读懂进程线程、同步异步、阻塞非阻塞、并发并行](https://mp.weixin.qq.com/s/c3YuR8pWKn4RpseGIWNxvw)
 
 - 线程安全定义：[java 线程安全和不安全](https://blog.csdn.net/mccand1234/article/details/52013168)
@@ -130,6 +132,8 @@ toBeGod目录：[分布式+JVM+多线程+spring+微服务+Netty](https://mp.weix
 ### 设计模式
 
 - [设计模式](https://github.com/UKeliliShuai/WithBeingIT/blob/master/Design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
+- [5 分钟理解什么是响应式编程 Reactive Programming](https://cloud.tencent.com/developer/news/327778)
+- [响应式编程（Reactive Programming）介绍](https://zhuanlan.zhihu.com/p/27678951)
 
 ### 框架
 
